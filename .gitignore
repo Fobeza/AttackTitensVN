@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+Thumbs.db
+# сырьё генерации арта и QC-листы — не в репозиторий
+raw_gen/
+qc_*.jpg
+game/assets/audio/_wav/

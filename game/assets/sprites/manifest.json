@@ -1,0 +1,460 @@
+{
+  "masha": {
+    "name": "Маша",
+    "neutral": {
+      "file": "masha_neutral.webp",
+      "height": 0.532
+    }
+  },
+  "levi": {
+    "name": "Леви",
+    "neutral": {
+      "file": "levi_neutral.webp",
+      "height": 0.547
+    },
+    "serious": {
+      "file": "levi_serious.webp",
+      "height": 0.547
+    },
+    "annoyed": {
+      "file": "levi_annoyed.webp",
+      "height": 0.547
+    },
+    "smirk": {
+      "file": "levi_smirk.webp",
+      "height": 0.547
+    },
+    "angry": {
+      "file": "levi_angry.webp",
+      "height": 0.547
+    },
+    "surprised": {
+      "file": "levi_surprised.webp",
+      "height": 0.547
+    },
+    "soft": {
+      "file": "levi_soft.webp",
+      "height": 0.547
+    },
+    "tired": {
+      "file": "levi_tired.webp",
+      "height": 0.547
+    },
+    "disgusted": {
+      "file": "levi_disgusted.webp",
+      "height": 0.547
+    },
+    "eyes_closed": {
+      "file": "levi_eyes_closed.webp",
+      "height": 0.547
+    },
+    "blush": {
+      "file": "levi_blush.webp",
+      "height": 0.547
+    }
+  },
+  "hange": {
+    "name": "Ханджи",
+    "neutral": {
+      "file": "hange_neutral.webp",
+      "height": 0.593
+    },
+    "excited": {
+      "file": "hange_excited.webp",
+      "height": 0.593
+    },
+    "maniac": {
+      "file": "hange_maniac.webp",
+      "height": 0.593
+    },
+    "curious": {
+      "file": "hange_curious.webp",
+      "height": 0.593
+    },
+    "serious": {
+      "file": "hange_serious.webp",
+      "height": 0.593
+    },
+    "smile": {
+      "file": "hange_smile.webp",
+      "height": 0.593
+    },
+    "tired": {
+      "file": "hange_tired.webp",
+      "height": 0.593
+    },
+    "surprised": {
+      "file": "hange_surprised.webp",
+      "height": 0.593
+    },
+    "sad": {
+      "file": "hange_sad.webp",
+      "height": 0.593
+    },
+    "angry": {
+      "file": "hange_angry.webp",
+      "height": 0.593
+    },
+    "laugh": {
+      "file": "hange_laugh.webp",
+      "height": 0.593
+    }
+  },
+  "erwin": {
+    "name": "Эрвин",
+    "neutral": {
+      "file": "erwin_neutral.webp",
+      "height": 0.66
+    },
+    "smile": {
+      "file": "erwin_smile.webp",
+      "height": 0.66
+    },
+    "cold": {
+      "file": "erwin_cold.webp",
+      "height": 0.66
+    },
+    "angry": {
+      "file": "erwin_angry.webp",
+      "height": 0.66
+    },
+    "thinking": {
+      "file": "erwin_thinking.webp",
+      "height": 0.66
+    },
+    "surprised": {
+      "file": "erwin_surprised.webp",
+      "height": 0.66
+    },
+    "schemer": {
+      "file": "erwin_schemer.webp",
+      "height": 0.66
+    },
+    "tired": {
+      "file": "erwin_tired.webp",
+      "height": 0.66
+    },
+    "inspiring": {
+      "file": "erwin_inspiring.webp",
+      "height": 0.66
+    },
+    "salute": {
+      "file": "erwin_salute.webp",
+      "height": 0.66
+    },
+    "soft": {
+      "file": "erwin_soft.webp",
+      "height": 0.66
+    }
+  },
+  "armin": {
+    "name": "Армин",
+    "neutral": {
+      "file": "armin_neutral.webp",
+      "height": 0.562
+    },
+    "blush": {
+      "file": "armin_blush.webp",
+      "height": 0.562
+    },
+    "scared": {
+      "file": "armin_scared.webp",
+      "height": 0.562
+    },
+    "determined": {
+      "file": "armin_determined.webp",
+      "height": 0.562
+    },
+    "smile": {
+      "file": "armin_smile.webp",
+      "height": 0.562
+    },
+    "sad": {
+      "file": "armin_sad.webp",
+      "height": 0.562
+    },
+    "thinking": {
+      "file": "armin_thinking.webp",
+      "height": 0.562
+    },
+    "angry": {
+      "file": "armin_angry.webp",
+      "height": 0.562
+    },
+    "crying": {
+      "file": "armin_crying.webp",
+      "height": 0.562
+    },
+    "surprised": {
+      "file": "armin_surprised.webp",
+      "height": 0.562
+    },
+    "proud": {
+      "file": "armin_proud.webp",
+      "height": 0.562
+    }
+  },
+  "mikasa": {
+    "name": "Микаса",
+    "neutral": {
+      "file": "mikasa_neutral.webp",
+      "height": 0.593
+    },
+    "smile": {
+      "file": "mikasa_smile.webp",
+      "height": 0.593
+    },
+    "killer": {
+      "file": "mikasa_killer.webp",
+      "height": 0.593
+    },
+    "worried": {
+      "file": "mikasa_worried.webp",
+      "height": 0.593
+    },
+    "melancholy": {
+      "file": "mikasa_melancholy.webp",
+      "height": 0.593
+    },
+    "tender": {
+      "file": "mikasa_tender.webp",
+      "height": 0.593
+    },
+    "determined": {
+      "file": "mikasa_determined.webp",
+      "height": 0.593
+    },
+    "blush": {
+      "file": "mikasa_blush.webp",
+      "height": 0.593
+    },
+    "surprised": {
+      "file": "mikasa_surprised.webp",
+      "height": 0.593
+    },
+    "tired": {
+      "file": "mikasa_tired.webp",
+      "height": 0.593
+    },
+    "sensing": {
+      "file": "mikasa_sensing.webp",
+      "height": 0.593
+    }
+  },
+  "eren": {
+    "name": "Эрен",
+    "neutral": {
+      "file": "eren_neutral.webp",
+      "height": 0.593
+    },
+    "rage": {
+      "file": "eren_rage.webp",
+      "height": 0.593
+    },
+    "stubborn": {
+      "file": "eren_stubborn.webp",
+      "height": 0.593
+    },
+    "awe": {
+      "file": "eren_awe.webp",
+      "height": 0.593
+    },
+    "surprised": {
+      "file": "eren_surprised.webp",
+      "height": 0.593
+    },
+    "downcast": {
+      "file": "eren_downcast.webp",
+      "height": 0.593
+    },
+    "smile": {
+      "file": "eren_smile.webp",
+      "height": 0.593
+    },
+    "resolve": {
+      "file": "eren_resolve.webp",
+      "height": 0.593
+    },
+    "embarrassed": {
+      "file": "eren_embarrassed.webp",
+      "height": 0.593
+    },
+    "crying": {
+      "file": "eren_crying.webp",
+      "height": 0.593
+    },
+    "wary": {
+      "file": "eren_wary.webp",
+      "height": 0.593
+    }
+  },
+  "petra": {
+    "name": "Петра",
+    "neutral": {
+      "file": "petra_neutral.webp",
+      "height": 0.57
+    },
+    "laugh": {
+      "file": "petra_laugh.webp",
+      "height": 0.57
+    },
+    "sympathy": {
+      "file": "petra_sympathy.webp",
+      "height": 0.57
+    },
+    "determined": {
+      "file": "petra_determined.webp",
+      "height": 0.57
+    },
+    "blush": {
+      "file": "petra_blush.webp",
+      "height": 0.57
+    },
+    "surprised": {
+      "file": "petra_surprised.webp",
+      "height": 0.57
+    },
+    "sad": {
+      "file": "petra_sad.webp",
+      "height": 0.57
+    },
+    "stern": {
+      "file": "petra_stern.webp",
+      "height": 0.57
+    },
+    "scared": {
+      "file": "petra_scared.webp",
+      "height": 0.57
+    },
+    "observant": {
+      "file": "petra_observant.webp",
+      "height": 0.57
+    },
+    "worried": {
+      "file": "petra_worried.webp",
+      "height": 0.57
+    }
+  },
+  "jean": {
+    "name": "Жан",
+    "neutral": {
+      "file": "jean_neutral.webp",
+      "height": 0.593
+    },
+    "annoyed": {
+      "file": "jean_annoyed.webp",
+      "height": 0.593
+    },
+    "blush": {
+      "file": "jean_blush.webp",
+      "height": 0.593
+    },
+    "smug": {
+      "file": "jean_smug.webp",
+      "height": 0.593
+    },
+    "serious": {
+      "file": "jean_serious.webp",
+      "height": 0.593
+    },
+    "surprised": {
+      "file": "jean_surprised.webp",
+      "height": 0.593
+    },
+    "scared": {
+      "file": "jean_scared.webp",
+      "height": 0.593
+    },
+    "tired": {
+      "file": "jean_tired.webp",
+      "height": 0.593
+    },
+    "angry": {
+      "file": "jean_angry.webp",
+      "height": 0.593
+    },
+    "dreamy": {
+      "file": "jean_dreamy.webp",
+      "height": 0.593
+    },
+    "awkward": {
+      "file": "jean_awkward.webp",
+      "height": 0.593
+    }
+  },
+  "sam": {
+    "name": "Сэм",
+    "neutral": {
+      "file": "sam_neutral.webp",
+      "height": 0.607
+    },
+    "laugh": {
+      "file": "sam_laugh.webp",
+      "height": 0.607
+    },
+    "grin": {
+      "file": "sam_grin.webp",
+      "height": 0.607
+    },
+    "innocent": {
+      "file": "sam_innocent.webp",
+      "height": 0.607
+    },
+    "scared": {
+      "file": "sam_scared.webp",
+      "height": 0.607
+    },
+    "proud": {
+      "file": "sam_proud.webp",
+      "height": 0.607
+    },
+    "thinking": {
+      "file": "sam_thinking.webp",
+      "height": 0.607
+    },
+    "blush": {
+      "file": "sam_blush.webp",
+      "height": 0.607
+    },
+    "serious": {
+      "file": "sam_serious.webp",
+      "height": 0.607
+    },
+    "offended": {
+      "file": "sam_offended.webp",
+      "height": 0.607
+    },
+    "plotting": {
+      "file": "sam_plotting.webp",
+      "height": 0.607
+    }
+  },
+  "npc_soldier": {
+    "name": "Патрульный",
+    "neutral": {
+      "file": "npc_soldier_m.webp",
+      "height": 0.593
+    }
+  },
+  "npc_scout": {
+    "name": "Разведчица",
+    "neutral": {
+      "file": "npc_soldier_f.webp",
+      "height": 0.562
+    }
+  },
+  "npc_cook": {
+    "name": "Повар",
+    "neutral": {
+      "file": "npc_cook.webp",
+      "height": 0.577
+    }
+  },
+  "npc_guard": {
+    "name": "Дозорный",
+    "neutral": {
+      "file": "npc_guard.webp",
+      "height": 0.607
+    }
+  }
+}

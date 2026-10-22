@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Конструктор — Sova VN</title>
+  <link rel="stylesheet" href="editor/editor.css">
+</head>
+<body>
+  <div id="topbar">
+    <h1>🎛 Конструктор</h1>
+    <span id="dirty-dot" class="hidden" title="Есть несохранённые правки">●</span>
+    <button class="tb-btn" id="tb-new">＋ Новая сцена</button>
+    <button class="tb-btn" id="tb-import">⇪ Импорт</button>
+    <button class="tb-btn" id="tb-folder" title="Подключить папку проекта — сохранять прямо в game/scenes/">📁 Папка проекта</button>
+    <button class="tb-btn primary" id="tb-export" title="Ctrl+S">⇩ Экспорт</button>
+    <button class="tb-btn" id="tb-test" title="Сцена с начала">▶ Тест</button>
+    <button class="tb-btn" id="tb-test-here" title="С выбранного шага">▶ С шага</button>
+    <button class="tb-btn" id="tb-lint">✓ Проверка</button>
+    <span class="spacer"></span>
+    <button class="tb-btn" id="tb-game">🎮 К игре</button>
+    <button class="tb-btn" id="tb-help">?</button>
+    <input type="file" id="import-file" accept=".json" hidden>
+  </div>
+  <div id="layout">
+    <aside id="left">
+      <div class="col-head">Сцены</div>
+      <div id="scene-list"></div>
+      <div id="scene-meta">
+        <label>Фон сцены<select id="meta-bg"></select></label>
+        <label>Музыка сцены<select id="meta-bgm"></select></label>
+      </div>
+    </aside>
+    <main id="middle">
+      <div id="steps-toolbar">
+        <select id="add-type"></select>
+        <button id="add-below">＋ Шаг ниже</button>
+        <button id="mv-up" disabled>↑</button>
+        <button id="mv-down" disabled>↓</button>
+        <button id="dup-step" disabled>⧉</button>
+        <button id="del-step" disabled>🗑</button>
+        <span id="step-count"></span>
+      </div>
+      <div id="steps"></div>
+    </main>
+    <aside id="right"><div class="empty-hint">Выбери шаг слева — форма появится здесь.</div></aside>
+  </div>
+  <div id="problems"></div>
+  <script src="engine/js/schema.js"></script>
+  <script src="editor/editor.js"></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+#!/usr/bin/env node
+/**
+ * smoke_test.mjs — прогон движка в настоящем браузере (headless Chromium).
+ *   npm i -D playwright && npx playwright install chromium   # один раз
+ *   node tools/smoke_test.mjs
+ * Проверяет поведение, которое легко сломать правкой движка: ввод, сейвы, переходы,
+ * выход в меню, мини-игры. Работает на сцене game/scenes/demo.json.
+ */
+import { createRequire } from "module";
+import { serve } from "./serve.mjs";
+
+const require = createRequire(import.meta.url);
+let chromium;
+try { ({ chromium } = require("playwright")); }
+catch {
+  console.log("Нужен playwright: npm i -D playwright && npx playwright install chromium");
+  process.exit(2);
+}
+
+const PORT = 8799, BASE = `http://localhost:${PORT}/`;
+const server = await serve(PORT, { log: false });
+const browser = await chromium.launch();
+let failed = 0;
+const results = [];
+
+async function page(url) {
+  const ctx = await browser.newContext({ viewport: { width: 405, height: 720 } });
+  const p = await ctx.newPage();
+  p.errors = [];
+  p.on("pageerror", e => p.errors.push(e.message));
+  p.on("console", m => { if (m.type() === "error") p.errors.push(m.text()); });
+  await p.goto(BASE + url);
+  await p.waitForFunction(() => window.VN && VN.cfg && VN.renderer.manifest !== undefined);
+  return p;
+}
+const st = p => p.evaluate(() => ({ scene: VN.game.scene, step: VN.game.step, text: document.getElementById("text").textContent }));
+const tapStage = p => p.mouse.click(200, 120);
+/** Тапать, пока не окажемся на шаге n (или метке) */
+async function until(p, target, max = 60) {
+  for (let k = 0; k < max; k++) {
+    const ok = await p.evaluate(t => {
+      const sc = VN.parser.sceneData(); if (!sc) return false;
+      const idx = typeof t === "number" ? t : sc.steps.findIndex(s => s.label === t);
+      return VN.game.step >= idx && VN.game.step <= idx + 1 + (typeof t === "string" ? 1 : 0);
+    }, target);
+    if (ok) return;
+    await tapStage(p);
+    await p.waitForTimeout(60);
+  }
+  throw new Error(`не дошли до ${target}`);
+}
+async function test(name, fn) {
+  try {
+    await Promise.race([fn(), new Promise((_, rej) => setTimeout(() => rej(new Error("таймаут 30 с")), 30000))]);
+    results.push(`  ✓ ${name}`);
+  }
+  catch (e) { failed++; results.push(`  ✗ ${name}\n      ${e.message}`); }
+}
+const assert = (c, m) => { if (!c) throw new Error(m); };
+
+await test("меню открывается без ошибок", async () => {
+  const p = await page("");
+  await p.waitForSelector("#m-new");
+  assert(!p.errors.length, p.errors.join("; "));
+  await p.context().close();
+});
+
+await test("тап во время печати допечатывает строку, а не пропускает её", async () => {
+  const p = await page("?scene=demo");
+  await p.waitForSelector("#card:not(.hidden)");
+  await tapStage(p);                                   // карточка → нарратив (шаг 1)
+  await p.waitForTimeout(80);
+  const a = await st(p);
+  assert(a.step === 1, `ожидали шаг 1, а ${a.step}`);
+  await p.click("#text");                              // тап по самому окну диалога
+  await p.waitForTimeout(80);
+  const b = await st(p);
+  assert(b.step === 1, `один тап перескочил на шаг ${b.step}`);
+  assert(b.text.length > 40, "строка не допечаталась");
+  await p.click("#dialog");
+  await p.waitForTimeout(80);
+  assert((await st(p)).step > 1, "второй тап не продвинул");
+  await p.context().close();
+});
+
+await test("открыть/закрыть паузу и бэклог — диалог не продвигается", async () => {
+  const p = await page("?scene=demo&at=2");
+  await p.waitForTimeout(150);
+  const s0 = (await st(p)).step;
+  await p.click("#btn-pause");
+  await p.click("#overlay .action:last-child");
+  await p.click("#btn-backlog");
+  await p.keyboard.press("Escape");
+  await p.waitForTimeout(100);
+  assert((await st(p)).step === s0, `шаг сменился ${s0} → ${(await st(p)).step}`);
+  await p.context().close();
+});
+
+await test("меню → новая игра: нет второго (призрачного) исполнителя", async () => {
+  const p = await page("?scene=demo&at=pick");
+  await p.evaluate(() => {
+    window.__pending = 0;
+    const orig = VN.ui._line.bind(VN.ui);
+    VN.ui._line = a => { __pending++; return orig(a).finally(() => __pending--); };
+  });
+  await p.evaluate(() => VN.menu.newGame("demo", 3));
+  await p.waitForTimeout(100);
+  await p.evaluate(() => { VN.menu.show(); VN.menu.newGame("demo", 3); });
+  await p.waitForTimeout(150);
+  for (let k = 0; k < 4; k++) { await tapStage(p); await p.waitForTimeout(80); }
+  const n = await p.evaluate(() => __pending);
+  assert(n <= 1, `одновременно ждут ${n} реплик`);
+  await p.context().close();
+});
+
+await test("сейв перед выбором → загрузка → goto работает", async () => {
+  const p = await page("?scene=demo");
+  await until(p, "pick");
+  await p.waitForSelector("#choices:not(.hidden)");
+  await p.goto(BASE);
+  await p.waitForSelector("#m-cont:not([disabled])");
+  await p.click("#m-cont");
+  await p.waitForSelector("#choices:not(.hidden) .choice-btn");
+  await p.click("#choices .choice-btn >> text=Закончить демо");
+  await p.waitForTimeout(900);
+  const s = await st(p);
+  const want = await p.evaluate(() => VN.parser.sceneData().steps.findIndex(x => x.label === "finish"));
+  assert(s.step > want, `после загрузки goto не сработал: шаг ${s.step}, метка finish = ${want}`);
+  assert(!p.errors.length, p.errors.join("; "));
+  await p.context().close();
+});
+
+await test("сейв переживает правку сцены (восстановление по метке-якорю)", async () => {
+  const p = await page("?scene=demo&at=mg_win");
+  await p.waitForTimeout(200);
+  const r = await p.evaluate(async () => {
+    const snap = VN.save.snapshot();                        // шаг сразу после метки mg_win
+    VN.parser._cache.demo.steps.unshift({ narr: "вставка 1" }, { narr: "вставка 2" });   // «правка» сцены
+    VN.parser.loadSnapshot(snap);                          // не ждём: run() идёт до конца сцены
+    await new Promise(r => setTimeout(r, 300));
+    const sc = VN.parser.sceneData();
+    return { step: VN.game.step, want: sc.steps.findIndex(s => s.label === "mg_win") + snap.anchor.offset };
+  });
+  assert(r.step === r.want, `шаг ${r.step}, ожидали ${r.want}`);
+  await p.context().close();
+});
+
+await test("сейв с удалённой сцены: ошибка на экране и возврат в меню", async () => {
+  const p = await page("");
+  await p.waitForSelector("#m-new");
+  await p.evaluate(() => VN.parser.loadSnapshot({ v: 1, scene: "deleted_scene", step: 5, vars: {}, visual: { bg: null, sprites: {} }, history: [] }));
+  await p.waitForSelector("#menu-screen:not(.hidden)");
+  assert(await p.locator(".toast.bad").count() >= 1, "нет сообщения об ошибке");
+  p.errors.length = 0;   // console.error от VN.error здесь ожидаем
+  await p.context().close();
+});
+
+await test("персонаж переезжает между слотами без дубля", async () => {
+  const p = await page("?scene=demo");
+  await until(p, 8);
+  await p.waitForTimeout(100);
+  const n = await p.evaluate(() => document.querySelectorAll('#sprites .sprite.visible[data-char="hange"]').length);
+  const slot = await p.evaluate(() => VN.renderer.slotOf("hange"));
+  assert(n === 1, `видимых Ханджи: ${n}`);
+  assert(slot === "left", `Ханджи в слоте ${slot}`);
+  await p.context().close();
+});
+
+await test("мини-игра quiz: победа → переход на метку win", async () => {
+  const p = await page("?scene=demo&at=mg_quiz");
+  await p.waitForSelector("#minigame:not(.hidden) .mg-opt");
+  await p.click(".mg-opt >> text=Мария");
+  await p.waitForFunction(() => document.getElementById("minigame").classList.contains("hidden"), null, { timeout: 3000 });
+  await p.waitForTimeout(100);
+  const r = await p.evaluate(() => ({ v: VN.game.vars, label: VN.parser.sceneData().steps[VN.game.step - 1].label }));
+  assert(r.label === "mg_win", `ожидали mg_win, а ${r.label}`);
+  assert(r.v.demo_score === 1 && r.v.truth === 1, "var/onWin не применились: " + JSON.stringify(r.v));
+  await p.context().close();
+});
+
+await test("мини-игра: «Пропустить» = проигрыш (skipAs по умолчанию)", async () => {
+  const p = await page("?scene=demo&at=mg_timing");
+  await p.waitForSelector("#minigame .mg-skip");
+  await p.click("#minigame .mg-skip");
+  await p.waitForTimeout(150);
+  const label = await p.evaluate(() => VN.parser.sceneData().steps[VN.game.step - 1].label);
+  assert(label === "mg_lose", `ожидали mg_lose, а ${label}`);
+  await p.context().close();
+});
+
+await test("условие в опции: заперта без доверия, открыта с ним", async () => {
+  const p = await page("?scene=demo&at=pick");
+  await p.waitForSelector("#choices .choice-btn");
+  assert(await p.locator("#choices .choice-btn[disabled]").count() === 1, "секретная опция не заперта");
+  const p2 = await page("?scene=demo&at=pick&vars=trust:2");
+  await p2.waitForSelector("#choices .choice-btn");
+  assert(await p2.locator("#choices .choice-btn[disabled]").count() === 0, "секретная опция заперта при trust=2");
+  await p.context().close(); await p2.context().close();
+});
+
+await test("пропуск (skip) останавливается на выборе", async () => {
+  const p = await page("?scene=demo");
+  await until(p, "pick");                 // всё прочитано
+  await p.waitForSelector("#choices:not(.hidden)");
+  await p.evaluate(() => VN.menu.newGame("demo"));
+  await p.waitForTimeout(100);
+  await p.click("#btn-skip");
+  await p.waitForSelector("#choices:not(.hidden) .choice-btn", { timeout: 8000 });
+  assert(await p.evaluate(() => VN.ui.mode) === null, "режим пропуска не выключился");
+  await p.context().close();
+});
+
+await test("демо проходится до конца", async () => {
+  const p = await page("?scene=demo&at=pick");
+  await p.waitForSelector("#choices .choice-btn");
+  await p.click("#choices .choice-btn >> text=Закончить демо");
+  for (let k = 0; k < 20 && !(await p.locator("#overlay:not(.hidden)").count()); k++) { await tapStage(p); await p.waitForTimeout(150); }
+  assert(await p.locator("#overlay h2 >> text=Демо завершено").count() === 1, "нет финальной карточки");
+  await p.click("#overlay .action");
+  await p.waitForSelector("#menu-screen:not(.hidden)");
+  assert(!p.errors.length, p.errors.join("; "));
+  await p.context().close();
+});
+
+await browser.close();
+server.close();
+console.log(results.join("\n"));
+console.log(failed ? `\n✗ провалено: ${failed}` : "\n✓ все проверки прошли");
+process.exit(failed ? 1 : 0);

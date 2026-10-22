@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#0c0c0e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Визуальная новелла</title>
+  <link rel="stylesheet" href="engine/css/engine.css">
+</head>
+<body>
+  <div id="app">
+    <div id="frame">
+      <!-- ИГРОВАЯ СЦЕНА -->
+      <div id="stage" class="hidden">
+        <div id="view">
+          <div id="bg"></div>
+          <div id="sprites"></div>
+          <div id="cg"></div>
+          <div id="vignette"></div>
+        </div>
+        <div id="flash"></div>
+        <div id="dialog" class="hidden">
+          <div id="speaker" class="hidden"></div>
+          <div id="text"></div>
+          <div id="next-hint">▼</div>
+        </div>
+        <div id="choices" class="hidden"></div>
+        <div id="card" class="hidden"></div>
+        <div id="minigame" class="hidden"></div>
+        <div id="hud" class="hidden">
+          <button id="btn-auto" title="Авто (A)">▶</button>
+          <button id="btn-skip" title="Пропуск прочитанного (S)">⏩</button>
+          <button id="btn-backlog" title="Бэклог (↑)">↻</button>
+          <button id="btn-pause" title="Пауза (Esc)">⚙</button>
+        </div>
+        <div id="debug" class="hidden"></div>
+      </div>
+
+      <!-- ГЛАВНОЕ МЕНЮ -->
+      <div id="menu-screen" class="hidden"></div>
+
+      <!-- ПАНЕЛИ и ТОСТЫ — поверх и меню, и сцены -->
+      <div id="overlay" class="hidden"></div>
+      <div id="cg-view" class="hidden"></div>
+      <div id="toast-wrap"></div>
+    </div>
+  </div>
+
+  <script src="engine/js/schema.js"></script>
+  <script src="engine/js/state.js"></script>
+  <script src="engine/js/save.js"></script>
+  <script src="engine/js/audio.js"></script>
+  <script src="engine/js/renderer.js"></script>
+  <script src="engine/js/ui.js"></script>
+  <script src="engine/js/minigames.js"></script>
+  <script src="engine/js/minigames/timing.js"></script>
+  <script src="engine/js/minigames/quiz.js"></script>
+  <script src="engine/js/parser.js"></script>
+  <script src="engine/js/menu.js"></script>
+  <script src="engine/js/main.js"></script>
+</body>
+</html>
