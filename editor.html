@@ -2,25 +2,28 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#141218">
   <title>Конструктор — Sova VN</title>
   <link rel="stylesheet" href="editor/editor.css">
 </head>
 <body>
   <div id="topbar">
-    <h1>🎛 Конструктор</h1>
+    <h1>🎛 <span class="long">Конструктор</span></h1>
     <span id="dirty-dot" class="hidden" title="Есть несохранённые правки">●</span>
-    <button class="tb-btn" id="tb-new">＋ Новая сцена</button>
-    <button class="tb-btn" id="tb-import">⇪ Импорт</button>
-    <button class="tb-btn" id="tb-folder" title="Подключить папку проекта — сохранять прямо в game/scenes/">📁 Папка проекта</button>
+    <button class="tb-btn extra" id="tb-new">＋ Новая сцена</button>
+    <button class="tb-btn extra" id="tb-import">⇪ Импорт</button>
+    <button class="tb-btn extra" id="tb-folder" title="Подключить папку проекта — сохранять прямо в game/scenes/">📁 Папка проекта</button>
     <button class="tb-btn primary" id="tb-export" title="Ctrl+S">⇩ Экспорт</button>
+    <button class="tb-btn" id="tb-copy" title="Скопировать JSON сцены в буфер обмена">📋 JSON</button>
     <button class="tb-btn" id="tb-test" title="Сцена с начала">▶ Тест</button>
-    <button class="tb-btn" id="tb-test-here" title="С выбранного шага">▶ С шага</button>
+    <button class="tb-btn extra" id="tb-test-here" title="С выбранного шага">▶ С шага</button>
     <button class="tb-btn" id="tb-lint">✓ Проверка</button>
     <span class="spacer"></span>
-    <button class="tb-btn" id="tb-game">🎮 К игре</button>
-    <button class="tb-btn" id="tb-help">?</button>
-    <input type="file" id="import-file" accept=".json" hidden>
+    <button class="tb-btn extra" id="tb-game">🎮 К игре</button>
+    <button class="tb-btn extra" id="tb-help">?</button>
+    <button class="tb-btn" id="tb-more" title="Ещё">⋯</button>
+    <input type="file" id="import-file" accept=".json,application/json" hidden>
   </div>
   <div id="layout">
     <aside id="left">
@@ -45,6 +48,11 @@
     </main>
     <aside id="right"><div class="empty-hint">Выбери шаг слева — форма появится здесь.</div></aside>
   </div>
+  <nav id="tabs">
+    <button data-view="scenes">🗂<span>Сцены</span></button>
+    <button data-view="steps">☰<span id="tab-steps">Шаги</span></button>
+    <button data-view="form">✎<span id="tab-form">Шаг</span></button>
+  </nav>
   <div id="problems"></div>
   <script src="engine/js/schema.js"></script>
   <script src="editor/editor.js"></script>

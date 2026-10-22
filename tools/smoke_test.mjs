@@ -222,6 +222,26 @@ await test("демо проходится до конца", async () => {
   await p.context().close();
 });
 
+await test("Конструктор на телефоне: экраны переключаются, ничего не вылезает за край", async () => {
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  const p = await ctx.newPage();
+  const errors = [];
+  p.on("pageerror", e => errors.push(e.message));
+  await p.goto(BASE + "editor.html");
+  await p.waitForSelector(".step");
+  await p.click('.step[data-i="3"]');
+  assert(await p.evaluate(() => document.body.dataset.view) === "form", "тап по шагу не открыл форму");
+  await p.click("#fn-next");
+  assert((await p.textContent("#right h2")).startsWith("Шаг 4"), "кнопка › не перешла к следующему шагу");
+  const wide = await p.evaluate(() => [...document.querySelectorAll("body *")]
+    .filter(e => e.offsetParent && e.getBoundingClientRect().right > innerWidth + 1).map(e => e.id || e.className));
+  assert(!wide.length, "вылезает за край: " + wide.slice(0, 3).join(", "));
+  await p.click("#fn-back");
+  assert(await p.evaluate(() => document.body.dataset.view) === "steps", "«← Шаги» не вернул к списку");
+  assert(!errors.length, errors.join("; "));
+  await ctx.close();
+});
+
 await browser.close();
 server.close();
 console.log(results.join("\n"));

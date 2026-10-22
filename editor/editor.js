@@ -7,6 +7,9 @@
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const SC = VN.schema;
+/** Телефонный режим: один экран за раз (см. @media в editor.css) */
+const mobileMQ = matchMedia("(max-width: 760px)");
+const mobile = () => mobileMQ.matches;
 
 const E = {
   cfg: null, manifest: null, bgs: [], audio: { bgm: [], sfx: [] },
@@ -15,6 +18,18 @@ const E = {
   dir: null,             // FileSystemDirectoryHandle корня проекта (если подключена папка)
   problems: []
 };
+
+/* ── Экраны на телефоне: scenes | steps | form ── */
+function setView(v) {
+  document.body.dataset.view = v;
+  document.querySelectorAll("#tabs button").forEach(b => b.classList.toggle("on", b.dataset.view === v));
+  if (v === "steps") document.querySelector(`.step[data-i="${E.sel}"]`)?.scrollIntoView({ block: "center" });
+  if (v === "form") $("#right").scrollTop = 0;
+}
+function updateTabs() {
+  $("#tab-steps").textContent = `Шаги${E.scene ? " · " + E.scene.steps.length : ""}`;
+  $("#tab-form").textContent = E.sel >= 0 ? `Шаг ${E.sel}` : "Шаг";
+}
 
 /* ── Типы шагов (из схемы) ── */
 const TYPES = SC.STEP_KEYS.map(k => [k, SC.STEPS[k].title]);
@@ -67,7 +82,6 @@ async function boot() {
   buildStaticControls();
   renderSceneList();
   if (E.scenes.length) await loadScene(E.scenes[0].id);
-  toast("Конструктор готов");
 }
 
 function buildStaticControls() {
@@ -86,6 +100,11 @@ function buildStaticControls() {
   $("#tb-export").onclick = exportScene;
   $("#tb-folder").onclick = connectFolder;
   if (!window.showDirectoryPicker) { $("#tb-folder").disabled = true; $("#tb-folder").title = "Нужен Chrome/Edge на компьютере"; }
+  $("#tb-copy").onclick = copyJson;
+  $("#tb-more").onclick = () => $("#topbar").classList.toggle("open");
+  document.querySelectorAll("#topbar .extra").forEach(b => b.addEventListener("click", () => $("#topbar").classList.remove("open")));
+  document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => setView(b.dataset.view));
+  setView("steps");
   $("#tb-test").onclick = () => testScene(false);
   $("#tb-test-here").onclick = () => testScene(true);
   $("#tb-lint").onclick = () => { lintNow(); renderProblems(true); };
@@ -120,7 +139,10 @@ function renderSceneList() {
     `<button class="scene-row ${sc.id === E.sceneId ? "active" : ""}" data-id="${esc(sc.id)}">
       ${esc(sc.title || sc.id)}<span class="id">${esc(sc.id)}</span>
     </button>`).join("");
-  document.querySelectorAll(".scene-row").forEach(b => b.onclick = () => loadScene(b.dataset.id));
+  document.querySelectorAll(".scene-row").forEach(b => b.onclick = async () => {
+    await loadScene(b.dataset.id);
+    if (mobile()) setView("steps");
+  });
 }
 
 /* ── Список шагов ── */
@@ -169,7 +191,11 @@ function renderSteps() {
       <span class="warn-flag ${flags[i] || ""}">${flags[i] === "error" ? "✗" : flags[i] ? "~" : ""}</span>
     </div>`;
   }).join("");
-  document.querySelectorAll(".step").forEach(el => el.onclick = () => { E.sel = +el.dataset.i; renderSteps(); renderForm(); });
+  document.querySelectorAll(".step").forEach(el => el.onclick = () => {
+    E.sel = +el.dataset.i; renderSteps(); renderForm();
+    if (mobile()) setView("form");
+  });
+  updateTabs();
   const canMove = E.sel >= 0;
   $("#mv-up").disabled = !canMove || E.sel === 0;
   $("#mv-down").disabled = !canMove || E.sel >= steps.length - 1;
@@ -194,12 +220,13 @@ function insertStep(st) {
   E.scene.steps.splice(at + 1, 0, st);
   E.sel = at + 1;
   markDirty(); refresh(); renderForm();
+  if (mobile()) setView("form");
 }
 function moveStep(dir) {
   const i = E.sel, j = i + dir, steps = E.scene.steps;
   if (i < 0 || j < 0 || j >= steps.length) return;
   [steps[i], steps[j]] = [steps[j], steps[i]];
-  E.sel = j; markDirty(); refresh();
+  E.sel = j; markDirty(); refresh(); renderForm();
 }
 function dupStep() {
   if (E.sel < 0) return;
@@ -210,6 +237,7 @@ function dupStep() {
 }
 function delStep() {
   if (E.sel < 0) return;
+  if (mobile() && !confirm(`Удалить шаг ${E.sel} (${stepType(E.scene.steps[E.sel])})?`)) return;
   E.scene.steps.splice(E.sel, 1);
   if (E.sel >= E.scene.steps.length) E.sel = E.scene.steps.length - 1;
   markDirty(); refresh(); renderForm();
@@ -231,7 +259,8 @@ function exprSelect(char, cur, blank) { return opts(exprsOf(char), cur, blank); 
 function whoSelect(cur) {
   const names = [...new Set(Object.values(E.manifest).map(v => v.name)), ...(E.cfg.speakers || [])];
   const known = names.includes(cur) || E.manifest[cur];
-  return names.map(n => `<option value="${esc(n)}" ${n === cur ? "selected" : ""}>${esc(n)}</option>`).join("") +
+  const curName = E.manifest[cur] ? E.manifest[cur].name : cur;     // who может быть ключом манифеста
+  return names.map(n => `<option value="${esc(n)}" ${n === curName ? "selected" : ""}>${esc(n)}</option>`).join("") +
     `<option value="__custom" ${!known && cur ? "selected" : ""}>✏️ своё имя…</option>`;
 }
 function varDatalist() {
@@ -249,7 +278,8 @@ function bindJson(el, fn) {
 }
 
 function renderFormEmpty() {
-  R().innerHTML = `<div class="empty-hint">Выбери шаг — форма появится здесь.<br><br>
+  updateTabs();
+  R().innerHTML = `<div class="empty-hint">${mobile() ? "Выбери шаг во вкладке «Шаги»" : "Выбери шаг — форма появится здесь"}.<br><br>
     Типовая связка: <b>show → say → say → hide</b>.<br>
     Эмоцию можно менять прямо в реплике (поле «Эмоция»).<br>
     Герой, показанный в другом слоте, переедет туда сам.</div>`;
@@ -259,7 +289,18 @@ function renderForm() {
   if (E.sel < 0 || !E.scene || !E.scene.steps[E.sel]) return renderFormEmpty();
   const s = E.scene.steps[E.sel];
   const t = stepType(s);
-  let html = `<h2>Шаг ${E.sel} · ${esc(SC.STEPS[t]?.title || t)}</h2><div id="f-problems">${formProblems()}</div>`;
+  const last = E.scene.steps.length - 1;
+  let html = `<div class="form-nav">
+      <button class="mini-btn back" id="fn-back">← Шаги</button>
+      <button class="mini-btn" id="fn-prev" title="Предыдущий шаг" ${E.sel === 0 ? "disabled" : ""}>‹</button>
+      <button class="mini-btn" id="fn-next" title="Следующий шаг" ${E.sel >= last ? "disabled" : ""}>›</button>
+      <span class="grow"></span>
+      <button class="mini-btn" id="fn-up" title="Поднять" ${E.sel === 0 ? "disabled" : ""}>↑</button>
+      <button class="mini-btn" id="fn-down" title="Опустить" ${E.sel >= last ? "disabled" : ""}>↓</button>
+      <button class="mini-btn" id="fn-dup" title="Копия">⧉</button>
+      <button class="mini-btn danger" id="fn-del" title="Удалить">🗑</button>
+    </div>
+    <h2>Шаг ${E.sel} · ${esc(SC.STEPS[t]?.title || t)}</h2><div id="f-problems">${formProblems()}</div>`;
   const upd = () => { markDirty(); refresh(); syncRaw(); };
 
   switch (t) {
@@ -377,7 +418,16 @@ function renderForm() {
   html += `<details class="raw" ${t === "?" ? "open" : ""}><summary>{ } JSON шага</summary>
     <textarea id="f-raw" class="code"></textarea><div class="f-hint">Правка применяется, когда JSON корректен.</div></details>`;
   R().innerHTML = html + varDatalist();
+  updateTabs();
   syncRaw();
+  const go = d => { E.sel += d; renderSteps(); renderForm(); $("#right").scrollTop = 0; };
+  $("#fn-back").onclick = () => setView("steps");
+  $("#fn-prev").onclick = () => go(-1);
+  $("#fn-next").onclick = () => go(1);
+  $("#fn-up").onclick = () => moveStep(-1);
+  $("#fn-down").onclick = () => moveStep(1);
+  $("#fn-dup").onclick = dupStep;
+  $("#fn-del").onclick = delStep;
   $("#f-raw").oninput = e => {
     try {
       const j = JSON.parse(e.target.value);
@@ -620,7 +670,8 @@ function renderProblems(force) {
     box.querySelectorAll(".p-row").forEach(el => el.onclick = () => {
       if (el.dataset.i === "") return;
       E.sel = +el.dataset.i; renderSteps(); renderForm();
-      document.querySelector(`.step[data-i="${E.sel}"]`)?.scrollIntoView({ block: "center" });
+      if (mobile()) { box.classList.remove("open"); setView("form"); }
+      else document.querySelector(`.step[data-i="${E.sel}"]`)?.scrollIntoView({ block: "center" });
     });
   }
 }
@@ -680,6 +731,23 @@ async function exportScene() {
   E.dirty = false; $("#dirty-dot").classList.add("hidden");
 }
 
+/** Скопировать JSON сцены — путь для телефона: вставить в GitHub (веб/приложение) → game/scenes/<id>.json */
+async function copyJson() {
+  if (!E.scene) return;
+  const text = sceneJson();
+  try { await navigator.clipboard.writeText(text); }
+  catch {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    const ok = document.execCommand("copy");
+    ta.remove();
+    if (!ok) { toast("✗ Буфер обмена недоступен — используй «Экспорт»", true); return; }
+  }
+  const errs = E.problems.filter(p => p.level === "error").length;
+  toast(`📋 JSON «${E.sceneId}» скопирован → вставь в game/scenes/${E.sceneId}.json${errs ? ` (ошибок: ${errs})` : ""}`, errs > 0);
+}
+
 function importScene(e) {
   const f = e.target.files[0];
   if (!f) return;
@@ -712,6 +780,7 @@ function newScene() {
   E.scenes.push({ id, title });
   markDirty();
   renderSceneList(); refresh(); renderForm();
+  if (mobile()) setView("steps");
   toast(E.dir ? `＋ «${id}»: «Сохранить» создаст файл и впишет сцену в game.json` : `＋ «${id}»: экспортируй и добавь { "id": "${id}" } в game.json → scenes`);
 }
 
@@ -732,6 +801,7 @@ function showHelp() {
 4) «▶ Тест» — сцена в движке с начала; «▶ С шага» — с выбранного шага.
 5) «📁 Папка проекта» (Chrome/Edge) — тогда «💾 Сохранить» (Ctrl+S) пишет прямо в game/scenes/.
    Без папки — «⇩ Экспорт» скачивает файл: положи его в game/scenes/.
+   С телефона — «📋 JSON» копирует сцену: вставь её в файл на GitHub.
 6) Правки автосохраняются как черновик в браузере до сохранения в файл.
 7) Любой шаг можно править как JSON (внизу формы).
 
