@@ -233,9 +233,18 @@ await test("Конструктор на телефоне: экраны пере�
   assert(await p.evaluate(() => document.body.dataset.view) === "form", "тап по шагу не открыл форму");
   await p.click("#fn-next");
   assert((await p.textContent("#right h2")).startsWith("Шаг 4"), "кнопка › не перешла к следующему шагу");
-  const wide = await p.evaluate(() => [...document.querySelectorAll("body *")]
+  const overflow = () => p.evaluate(() => [...document.querySelectorAll("body *")]
     .filter(e => e.offsetParent && e.getBoundingClientRect().right > innerWidth + 1).map(e => e.id || e.className));
-  assert(!wide.length, "вылезает за край: " + wide.slice(0, 3).join(", "));
+  // обходим формы всех шагов сцены: choice, set, if, minigame и т.д. не должны вылезать за край
+  const total = await p.evaluate(() => E.scene.steps.length);
+  await p.click("#fn-back");
+  for (let i = 0; i < total; i++) {
+    await p.click(`.step[data-i="${i}"]`);
+    const wide = await overflow();
+    assert(!wide.length, `шаг ${i}: вылезает за край: ` + wide.slice(0, 3).join(", "));
+    await p.click("#fn-back");
+  }
+  await p.click('.step[data-i="3"]');
   await p.click("#fn-back");
   assert(await p.evaluate(() => document.body.dataset.view) === "steps", "«← Шаги» не вернул к списку");
   assert(!errors.length, errors.join("; "));
