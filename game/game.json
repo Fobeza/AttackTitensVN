@@ -166,11 +166,16 @@
     "demo_score": {
       "default": 0,
       "title": "Очки демо"
+    },
+    "f_escape": {
+      "default": false
     }
   },
   "speakers": [
     "???",
-    "Голос"
+    "Голос",
+    "Командующий",
+    "Старуха"
   ],
   "scenes": [
     {
@@ -192,6 +197,30 @@
     {
       "id": "d2_evening",
       "title": "День 2: вечер и ночь"
+    },
+    {
+      "id": "d3_morning",
+      "title": "День 3: утро"
+    },
+    {
+      "id": "d3_evening",
+      "title": "День 3: вечер и ночь"
+    },
+    {
+      "id": "verdict",
+      "title": "Совет"
+    },
+    {
+      "id": "end_stay",
+      "title": "Финал: остаётся"
+    },
+    {
+      "id": "end_lock",
+      "title": "Финал: под замком"
+    },
+    {
+      "id": "end_leave",
+      "title": "Финал: уходит"
     },
     {
       "id": "demo",
