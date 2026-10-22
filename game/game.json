@@ -4,7 +4,7 @@
   "subtitle": "фанатская новелла · между 2 и 3 сезоном",
   "footer": "v0.3 · движок Sova VN · fan-game, некоммерческий",
   "about": "<p><b>Под крыльями свободы</b> — фанатская визуальная новелла по мотивам «Атаки титанов».</p><br><p>Некоммерческий фан-проект для личного пользования. Все права на вселенную и персонажей принадлежат правообладателям (Хадзимэ Исаяма, Kodansha, WIT Studio/MAPPA).</p>",
-  "startScene": "demo",
+  "startScene": "prologue",
   "storage": "wof",
   "paths": {
     "scenes": "game/scenes",
@@ -22,20 +22,177 @@
     "--good": "#7fa36b"
   },
   "vars": {
-    "trust": { "default": 0, "title": "Доверие" },
-    "lei":   { "default": 0, "title": "Леви" },
-    "erw":   { "default": 0, "title": "Эрвин" },
-    "han":   { "default": 0, "title": "Ханджи" },
-    "truth": { "default": 0, "title": "Тайна" },
-    "demo_score": { "default": 0, "title": "Очки демо" }
+    "trust": {
+      "default": 0,
+      "title": "Доверие"
+    },
+    "lei": {
+      "default": 0,
+      "title": "Леви"
+    },
+    "erw": {
+      "default": 0,
+      "title": "Эрвин"
+    },
+    "han": {
+      "default": 0,
+      "title": "Ханджи"
+    },
+    "truth": {
+      "default": 0,
+      "title": "Тайна"
+    },
+    "clue_sam": {
+      "default": 0,
+      "title": "Улики на Сэма"
+    },
+    "f_reflex": {
+      "default": false
+    },
+    "f_listen": {
+      "default": false
+    },
+    "f_tune": {
+      "default": false
+    },
+    "f_defiant": {
+      "default": false
+    },
+    "f_coop": {
+      "default": false
+    },
+    "f_told_tune": {
+      "default": false
+    },
+    "f_jean_ok": {
+      "default": false
+    },
+    "ev1": {
+      "default": 0
+    },
+    "f_ev1_levi": {
+      "default": false
+    },
+    "f_ev1_erw": {
+      "default": false
+    },
+    "f_ev1_han": {
+      "default": false
+    },
+    "f_ev1_sold": {
+      "default": false
+    },
+    "f_clean": {
+      "default": false
+    },
+    "f_lab": {
+      "default": false
+    },
+    "f_sleuth": {
+      "default": false
+    },
+    "f_report": {
+      "default": false
+    },
+    "f_levi_hurt": {
+      "default": false
+    },
+    "ev2": {
+      "default": 0
+    },
+    "f_ev2_levi": {
+      "default": false
+    },
+    "f_ev2_erw": {
+      "default": false
+    },
+    "f_ev2_han": {
+      "default": false
+    },
+    "f_ev2_sold": {
+      "default": false
+    },
+    "f_side_erw": {
+      "default": false
+    },
+    "f_side_lei": {
+      "default": false
+    },
+    "f_side_han": {
+      "default": false
+    },
+    "f_side_none": {
+      "default": false
+    },
+    "ev3": {
+      "default": 0
+    },
+    "f_ev3_levi": {
+      "default": false
+    },
+    "f_ev3_erw": {
+      "default": false
+    },
+    "f_ev3_han": {
+      "default": false
+    },
+    "f_ev3_sold": {
+      "default": false
+    },
+    "f_vouch_levi": {
+      "default": false
+    },
+    "f_vouch_erw": {
+      "default": false
+    },
+    "f_vouch_han": {
+      "default": false
+    },
+    "f_vouch_petra": {
+      "default": false
+    },
+    "f_pressed_sam": {
+      "default": false
+    },
+    "f_wants_stay": {
+      "default": false
+    },
+    "f_wants_leave": {
+      "default": false
+    },
+    "route": {
+      "default": ""
+    },
+    "demo_score": {
+      "default": 0,
+      "title": "Очки демо"
+    }
   },
-  "speakers": ["???", "Голос"],
+  "speakers": [
+    "???",
+    "Голос"
+  ],
   "scenes": [
-    { "id": "demo", "title": "Демо движка" }
+    {
+      "id": "prologue",
+      "title": "Пролог"
+    },
+    {
+      "id": "demo",
+      "title": "Демо движка"
+    }
   ],
   "audio": {
-    "bgm": ["tension_pad"],
-    "sfx": ["click", "tick", "door_metal", "steps", "steps_away"]
+    "bgm": [
+      "tension_pad"
+    ],
+    "sfx": [
+      "click",
+      "tick",
+      "door_metal",
+      "steps",
+      "steps_away"
+    ]
   },
   "gallery": [],
   "galleryText": "CG откроются по мере прохождения.",
