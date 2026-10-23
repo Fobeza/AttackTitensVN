@@ -222,6 +222,42 @@ await test("демо проходится до конца", async () => {
   await p.context().close();
 });
 
+await test("длинная реплика режется на страницы и не требует прокрутки", async () => {
+  const p = await page("?scene=demo&at=2");
+  await p.waitForTimeout(200);
+  const r = await p.evaluate(async () => {
+    VN.parser.stop();
+    VN.ui.settings.speed = 1;
+    const long = Array(14).fill("Это довольно длинное предложение, которое занимает место в окне диалога.").join(" ");
+    let resolved = false;
+    VN.ui.say("Леви", long).then(() => { resolved = true; });
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    let pages = 0, maxOver = 0;
+    while (!resolved && pages < 30) {
+      await sleep(80);
+      VN.ui.advance();                                  // допечатать страницу
+      const t = document.getElementById("text");
+      maxOver = Math.max(maxOver, t.scrollHeight - t.clientHeight);
+      pages++;
+      await sleep(20);
+      VN.ui.advance();                                  // следующая страница или конец
+    }
+    return { pages, maxOver, resolved };
+  });
+  assert(r.resolved, "реплика не закончилась");
+  assert(r.pages >= 2, `ожидали несколько страниц, а ${r.pages}`);
+  assert(r.maxOver <= 1, `текст не влезает в окно: +${r.maxOver}px`);
+  await p.context().close();
+});
+
+await test("над кнопками выбора остаётся вопрос (последняя реплика)", async () => {
+  const p = await page("?scene=demo&at=pick");
+  await p.waitForSelector("#choices:not(.hidden) .choice-prompt");
+  const t = await p.textContent("#choices .choice-prompt");
+  assert(t.includes("выбор"), "вопрос не показан: " + t);
+  await p.context().close();
+});
+
 await test("Конструктор на телефоне: экраны переключаются, ничего не вылезает за край", async () => {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   const p = await ctx.newPage();

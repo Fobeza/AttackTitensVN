@@ -124,7 +124,11 @@ VN.parser = {
         case "flash": VN.renderer.flash(s.flash); break;
         case "choice": {
           VN.save.auto();                                 // автосейв перед каждым выбором
-          const opt = await VN.ui.choice(s.choice);
+          let j = i - 1;
+          while (j >= 0 && typeof scene.steps[j].label === "string") j--;   // метки не в счёт
+          const prev = scene.steps[j];                                       // реплика перед выбором — это «вопрос»
+          const prompt = prev && prev.say ? { who: prev.say.who, text: prev.say.text } : prev && prev.narr ? { who: null, text: prev.narr } : null;
+          const opt = await VN.ui.choice(s.choice, prompt);
           if (!opt || !alive()) return;
           if (opt.set) VN.applySet(opt.set);
           if (opt.memo) VN.memo(VN.fmt(opt.memo));

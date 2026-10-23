@@ -132,27 +132,31 @@ VN.ui = {
         if (g.history.length > 80) g.history.shift();
       }
 
-      let done = false, raf = 0, timer = 0;
+      // длинная реплика режется на страницы по предложениям: каждая помещается в окно без прокрутки
+      const pages = this._paginate(full);
+      let pi = 0, done = false, raf = 0, timer = 0;
+      const lastPage = () => pi >= pages.length - 1;
       const end = ok => {
         if (this._wait === w) this._wait = null;
         cancelAnimationFrame(raf); clearTimeout(timer);
         resolve(ok);
       };
+      const nextOrEnd = () => { if (lastPage()) end(true); else { pi++; startPage(); } };
       const schedule = () => {
         clearTimeout(timer);
-        if (this.mode === "skip") timer = setTimeout(() => end(true), 50);
-        else if (this.mode === "auto") timer = setTimeout(() => end(true), (900 + full.length * 45) * this.settings.autoDelay);
+        if (this.mode === "skip") timer = setTimeout(nextOrEnd, 50);
+        else if (this.mode === "auto") timer = setTimeout(nextOrEnd, (900 + pages[pi].length * 45) * this.settings.autoDelay);
       };
       const finish = () => {
         if (done) return;
         done = true;
         cancelAnimationFrame(raf);
-        txt.textContent = full;
+        txt.textContent = pages[pi];
         hint.style.visibility = "visible";
         schedule();
       };
       const w = {
-        advance: () => { if (!done) finish(); else end(true); },
+        advance: () => { if (!done) finish(); else nextOrEnd(); },
         cancel: () => end(false),
         kick: () => {
           if (this.mode === "skip" && !wasRead && !this.settings.skipUnread) {
@@ -164,20 +168,51 @@ VN.ui = {
       };
       this._wait = w;
 
-      if (this.mode === "skip") { w.kick(); if (this.mode === "skip") return; }
-
       const cps = 1000 / this.settings.speed;     // speed = мс на символ
-      let start = -1, shown = -1;
-      const step = ts => {
-        if (done) return;
-        if (start < 0) start = ts;
-        const n = Math.floor((ts - start) / 1000 * cps);
-        if (n !== shown) { shown = n; txt.textContent = full.slice(0, n); }
-        if (n >= full.length) { finish(); return; }
+      const startPage = () => {
+        done = false;
+        txt.textContent = "";
+        hint.style.visibility = "hidden";
+        if (this.mode === "skip") { w.kick(); if (this.mode === "skip") return; }
+        const page = pages[pi];
+        let start = -1, shown = -1;
+        const step = ts => {
+          if (done) return;
+          if (start < 0) start = ts;
+          const n = Math.floor((ts - start) / 1000 * cps);
+          if (n !== shown) { shown = n; txt.textContent = page.slice(0, n); }
+          if (n >= page.length) { finish(); return; }
+          raf = requestAnimationFrame(step);
+        };
         raf = requestAnimationFrame(step);
       };
-      raf = requestAnimationFrame(step);
+      startPage();
     });
+  },
+
+  /** Разбить текст на страницы так, чтобы каждая влезала в окно диалога (по предложениям, затем по словам) */
+  _paginate(text) {
+    const txt = this.el("text");
+    const fits = t => { txt.textContent = t; return txt.scrollHeight <= txt.clientHeight + 1; };
+    let pages = [text];
+    if (!fits(text)) {
+      const parts = text.match(/[^.!?…]+(?:[.!?…]+["»)]*|$)\s*/g) || [text];
+      pages = [];
+      let cur = "";
+      const push = () => { if (cur.trim()) pages.push(cur.trim()); cur = ""; };
+      for (const sent of parts) {
+        if (fits(cur + sent)) { cur += sent; continue; }
+        push();
+        if (fits(sent)) { cur = sent; continue; }
+        for (const wd of sent.split(/(\s+)/)) {      // одно предложение длиннее окна: режем по словам
+          if (fits(cur + wd)) cur += wd; else { push(); cur = wd.trimStart(); }
+        }
+      }
+      push();
+      if (!pages.length) pages = [text];
+    }
+    txt.textContent = "";
+    return pages;
   },
 
   say(who, text) { return this._line({ who, text, kind: "say" }); },
@@ -220,7 +255,7 @@ VN.ui = {
   },
 
   /** Выбор. Promise<опция | null(отменено)> */
-  choice(options) {
+  choice(options, prompt) {
     if (this.mode === "skip") this.setMode(null);
     return new Promise(resolve => {
       const wrap = this.el("choices");
@@ -233,6 +268,14 @@ VN.ui = {
         cancel: () => { close(); resolve(null); }
       };
       this._wait = w;
+      if (prompt) {          // реплика, на которую отвечает игрок, остаётся видна над кнопками
+        const q = document.createElement("div");
+        q.className = "choice-prompt";
+        const nm = prompt.who ? VN.renderer.displayName(prompt.who) : "";
+        if (nm) { const bb = document.createElement("b"); bb.textContent = nm + ": "; q.appendChild(bb); }
+        q.appendChild(document.createTextNode(VN.fmt(prompt.text)));
+        wrap.appendChild(q);
+      }
       let n = 0;
       options.forEach(opt => {
         const ok = VN.test(opt.if);
