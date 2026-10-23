@@ -884,7 +884,8 @@
     },
     {
       "set": {
-        "clue_sam": 1
+        "clue_sam": 1,
+        "f_c_roof": true
       }
     },
     {
@@ -1012,7 +1013,8 @@
     },
     {
       "set": {
-        "clue_sam": 1
+        "clue_sam": 1,
+        "f_c_letter": true
       }
     },
     {

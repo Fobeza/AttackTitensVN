@@ -139,25 +139,7 @@
     "f_ev3_sold": {
       "default": false
     },
-    "f_vouch_levi": {
-      "default": false
-    },
-    "f_vouch_erw": {
-      "default": false
-    },
-    "f_vouch_han": {
-      "default": false
-    },
-    "f_vouch_petra": {
-      "default": false
-    },
     "f_pressed_sam": {
-      "default": false
-    },
-    "f_wants_stay": {
-      "default": false
-    },
-    "f_wants_leave": {
       "default": false
     },
     "route": {
@@ -169,13 +151,57 @@
     },
     "f_escape": {
       "default": false
+    },
+    "f_c_name": {
+      "default": false
+    },
+    "f_c_phrase": {
+      "default": false
+    },
+    "f_c_night1": {
+      "default": false
+    },
+    "f_c_roof": {
+      "default": false
+    },
+    "f_c_letter": {
+      "default": false
+    },
+    "f_c_pressed": {
+      "default": false
+    },
+    "f_c_cord": {
+      "default": false
+    },
+    "f_c_keys": {
+      "default": false
+    },
+    "f_c_asked": {
+      "default": false
+    },
+    "f_c_stranger": {
+      "default": false
+    },
+    "f_alibi_petra": {
+      "default": false
+    },
+    "f_sam_spared": {
+      "default": false
+    },
+    "f_sam_arrested": {
+      "default": false
+    },
+    "f_tone_soft": {
+      "default": false
+    },
+    "proof": {
+      "default": 0
     }
   },
   "speakers": [
     "???",
     "Голос",
-    "Командующий",
-    "Старуха"
+    "Командующий"
   ],
   "scenes": [
     {
@@ -204,23 +230,23 @@
     },
     {
       "id": "d3_evening",
-      "title": "День 3: вечер и ночь"
+      "title": "День 3: расследование"
     },
     {
-      "id": "verdict",
-      "title": "Совет"
+      "id": "exposure",
+      "title": "Конфронтация"
     },
     {
-      "id": "end_stay",
-      "title": "Финал: остаётся"
+      "id": "accept",
+      "title": "Приём в корпус"
+    },
+    {
+      "id": "ac_hook",
+      "title": "Крючок на Гл. 2"
     },
     {
       "id": "end_lock",
       "title": "Финал: под замком"
-    },
-    {
-      "id": "end_leave",
-      "title": "Финал: уходит"
     },
     {
       "id": "demo",

@@ -762,7 +762,8 @@
     },
     {
       "set": {
-        "clue_sam": 1
+        "clue_sam": 1,
+        "f_c_name": true
       }
     },
     {

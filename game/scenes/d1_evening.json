@@ -1016,7 +1016,8 @@
     },
     {
       "set": {
-        "clue_sam": 1
+        "clue_sam": 1,
+        "f_c_phrase": true
       }
     },
     {
@@ -1223,7 +1224,8 @@
     },
     {
       "set": {
-        "clue_sam": 1
+        "clue_sam": 1,
+        "f_c_night1": true
       }
     },
     {
