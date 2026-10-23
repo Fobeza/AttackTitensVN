@@ -267,5 +267,8 @@
   },
   "gallery": [],
   "galleryText": "CG откроются по мере прохождения.",
-  "minigames": {}
+  "minigames": {
+    "cleaning": "game/minigames/cleaning.js",
+    "lab": "game/minigames/lab.js"
+  }
 }

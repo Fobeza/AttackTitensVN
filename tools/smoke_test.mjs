@@ -258,6 +258,68 @@ await test("над кнопками выбора остаётся вопрос (
   await p.context().close();
 });
 
+/** Запустить мини-игру прямо на странице (парсер остановлен) и вернуть результат через window.__r */
+async function startMg(p, step) {
+  await p.evaluate(s => { window.__r = null; VN.parser.stop(); VN.minigames.play(s).then(r => { window.__r = r || { aborted: true }; }); }, step);
+  await p.waitForSelector("#minigame .mg-intro .mg-btn");
+  await p.click("#minigame .mg-intro .mg-btn");
+}
+const mgResult = (p, ms = 8000) => p.waitForFunction(() => window.__r, null, { timeout: ms }).then(() => p.evaluate(() => window.__r));
+
+await test("мини-игра «Уборка»: оттёр пятна пальцем → победа", async () => {
+  const p = await page("?scene=demo&at=2");
+  await startMg(p, { minigame: "cleaning", params: { time: 30, need: 0.8 } });
+  const box = await p.locator(".clean-cv").boundingBox();
+  for (let y = box.y + 8, k = 0; y < box.y + box.height; y += 14, k++) {
+    await p.mouse.move(k % 2 ? box.x + box.width - 4 : box.x + 4, y);
+    await p.mouse.down();
+    await p.mouse.move(k % 2 ? box.x + 4 : box.x + box.width - 4, y, { steps: 12 });
+    await p.mouse.up();
+  }
+  const r = await mgResult(p);
+  assert(r.win && r.score >= 80, "ожидали победу, а " + JSON.stringify(r));
+  await p.context().close();
+});
+
+await test("мини-игра «Уборка»: время вышло → поражение", async () => {
+  const p = await page("?scene=demo&at=2");
+  await startMg(p, { minigame: "cleaning", params: { time: 1.2, need: 0.8 } });
+  const r = await mgResult(p);
+  assert(!r.win && r.score < 80, "ожидали поражение, а " + JSON.stringify(r));
+  await p.context().close();
+});
+
+await test("мини-игра «Лаборатория»: верный порядок (тапами) → победа", async () => {
+  const p = await page("?scene=demo&at=2");
+  await startMg(p, { minigame: "lab", params: { puzzle: 0 } });
+  const sol = await p.evaluate(() => document.querySelector(".lab").parentElement.dataset.solution);
+  assert(sol === "ABDC", "неожиданное решение " + sol);
+  for (const k of sol) await p.click(`.lab-bottle[data-k="${k}"]`);
+  await p.click(".lab-mix");
+  const r = await mgResult(p);
+  assert(r.win && r.score === 3, "ожидали победу, а " + JSON.stringify(r));
+  await p.context().close();
+});
+
+await test("мини-игра «Лаборатория»: перетаскивание, неверный порядок × попытки → поражение", async () => {
+  const p = await page("?scene=demo&at=2");
+  await startMg(p, { minigame: "lab", params: { puzzle: 0, tries: 2 } });
+  // перетаскиваем Изумрудный в 3-ю ячейку
+  const bb = await p.locator('.lab-bottle[data-k="D"]').boundingBox(), sb = await p.locator('.lab-slot[data-i="2"]').boundingBox();
+  await p.mouse.move(bb.x + bb.width / 2, bb.y + bb.height / 2); await p.mouse.down();
+  await p.mouse.move(sb.x + sb.width / 2, sb.y + sb.height / 2, { steps: 8 }); await p.mouse.up();
+  const filled = await p.evaluate(() => document.querySelectorAll(".lab-slot")[2].textContent);
+  assert(filled === "Изумрудный", "перетаскивание не сработало: " + filled);
+  await p.click("#minigame .lab-reset");
+  for (const k of "CDBA") await p.click(`.lab-bottle[data-k="${k}"]`);   // заведомо неверно
+  await p.click(".lab-mix");
+  assert((await p.textContent(".lab-msg")).includes("Осадок"), "нет подсказки после ошибки");
+  await p.click(".lab-mix");
+  const r = await mgResult(p);
+  assert(!r.win, "ожидали поражение, а " + JSON.stringify(r));
+  await p.context().close();
+});
+
 await test("Конструктор на телефоне: экраны переключаются, ничего не вылезает за край", async () => {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   const p = await ctx.newPage();
