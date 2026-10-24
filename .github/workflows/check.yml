@@ -10,8 +10,10 @@ jobs:
           node-version: 22
       - name: Линтер сцен
         run: node tools/lint_scenes.mjs --quiet
+      - name: Сюжетные прогоны
+        run: node tools/story_test.mjs
       - name: Смоук-тест движка
         run: |
-          npm install --no-audit --no-fund
+          npm ci --no-audit --no-fund
           npx playwright install --with-deps chromium
           node tools/smoke_test.mjs

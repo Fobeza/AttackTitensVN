@@ -62,7 +62,7 @@ VN.ui = {
       if (!this.stageVisible()) return;
       const k = e.key;
       if (k === " " || k === "Enter" || k === "ArrowRight") {
-        if (this.el("minigame").contains(document.activeElement)) return;
+        if (e.target.closest("button, [role=button], a, #minigame")) return;
         e.preventDefault();
         if (this.mode === "skip") this.setMode(null); else this.advance();
       }
@@ -99,7 +99,7 @@ VN.ui = {
     this.mode = m;
     this.el("btn-auto").classList.toggle("on", m === "auto");
     this.el("btn-skip").classList.toggle("on", m === "skip");
-    if (m && this._wait && this._wait.kick) this._wait.kick();
+    if (this._wait && this._wait.kick) this._wait.kick();
   },
   skipping() { return this.mode === "skip"; },
 
@@ -144,6 +144,7 @@ VN.ui = {
       const nextOrEnd = () => { if (lastPage()) end(true); else { pi++; startPage(); } };
       const schedule = () => {
         clearTimeout(timer);
+        if (this.overlayOpen()) return;
         if (this.mode === "skip") timer = setTimeout(nextOrEnd, 50);
         else if (this.mode === "auto") timer = setTimeout(nextOrEnd, (900 + pages[pi].length * 45) * this.settings.autoDelay);
       };
@@ -226,6 +227,7 @@ VN.ui = {
       c.innerHTML = `<div class="card-title">${esc(VN.fmt(title))}</div>${sub ? `<div class="card-sub">${esc(VN.fmt(sub))}</div>` : ""}`;
       c.classList.remove("hidden");
       this.el("dialog").classList.add("hidden");
+      const wasRead = VN.persist.isRead(VN.game.scene, VN.game.step);
       VN.persist.markRead(VN.game.scene, VN.game.step);
       let timer = 0;
       const end = ok => {
@@ -237,7 +239,11 @@ VN.ui = {
       const w = {
         advance: () => end(true),
         cancel: () => end(false),
-        kick: () => { clearTimeout(timer); if (this.mode) timer = setTimeout(() => end(true), this.mode === "skip" ? 80 : 2200 * this.settings.autoDelay); }
+        kick: () => {
+          clearTimeout(timer);
+          if (this.mode === "skip" && !wasRead && !this.settings.skipUnread) this.setMode(null);
+          if (this.mode && !this.overlayOpen()) timer = setTimeout(() => end(true), this.mode === "skip" ? 80 : 2200 * this.settings.autoDelay);
+        }
       };
       this._wait = w;
       w.kick();
@@ -276,10 +282,11 @@ VN.ui = {
         q.appendChild(document.createTextNode(VN.fmt(prompt.text)));
         wrap.appendChild(q);
       }
-      let n = 0;
+      let n = 0, available = 0;
       options.forEach(opt => {
         const ok = VN.test(opt.if);
         if (!ok && opt.locked === "hide") return;
+        if (ok) available++;
         const b = document.createElement("button");
         b.className = "choice-btn";
         b.style.animationDelay = (n++ * 70) + "ms";
@@ -294,7 +301,10 @@ VN.ui = {
         };
         wrap.appendChild(b);
       });
-      if (!n) { VN.error("в выборе не осталось видимых опций"); }
+      if (!available) {
+        VN.error("в выборе не осталось доступных опций");
+        VN.menu.show();
+      }
     });
   },
 
@@ -315,6 +325,7 @@ VN.ui = {
     const ov = this.el("overlay");
     ov.innerHTML = "";
     ov.classList.remove("hidden");
+    this.setMode(null);
     this._onClose = opts.onClose || null;
     const p = document.createElement("div");
     p.className = "panel" + (opts.wide ? " wide" : "");

@@ -20,17 +20,19 @@ const TYPES = {
 
 export function serve(port = 8000, { log = true } = {}) {
   const server = http.createServer((req, res) => {
-    let p = decodeURIComponent(new URL(req.url, "http://x").pathname);
+    let p;
+    try { p = decodeURIComponent(new URL(req.url, "http://x").pathname); }
+    catch { res.writeHead(400).end("Bad request"); return; }
     if (p.endsWith("/")) p += "index.html";
     const file = path.join(root, p);
-    if (!file.startsWith(root)) { res.writeHead(403).end(); return; }
+    if (!file.startsWith(root + path.sep) || p.split("/").some(part => part.startsWith(".") || part === "node_modules")) { res.writeHead(403).end(); return; }
     fs.readFile(file, (err, data) => {
       if (err) { res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" }).end("404 " + p); return; }
       res.writeHead(200, { "Content-Type": TYPES[path.extname(file)] || "application/octet-stream", "Cache-Control": "no-store" });
       res.end(data);
     });
   });
-  return new Promise(ok => server.listen(port, () => {
+  return new Promise(ok => server.listen(port, "0.0.0.0", () => {
     if (log) console.log(`Sova VN: http://localhost:${port}/  ·  Конструктор: http://localhost:${port}/editor.html`);
     ok(server);
   }));

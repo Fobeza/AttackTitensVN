@@ -14,6 +14,7 @@ VN.minigames = {
   _reg: {},
   _active: null,
   _scripts: {},
+  _gen: 0,
 
   register(id, def) { this._reg[id] = def; },
 
@@ -36,16 +37,21 @@ VN.minigames = {
   },
 
   abort() {
+    this._gen++;
     if (this._active) this._active(null);
   },
 
   /** Запуск по шагу сцены. Promise<{win, score, skipped} | null(прервано)> */
   async play(step) {
+    this.abort();
+    const gen = this._gen;
     const id = step.minigame;
     const params = step.params || {};
     VN.ui.setMode(null);
     const skipResult = () => ({ win: step.skipAs === "win", score: 0, skipped: true });
-    if (!await this.ensure(id)) {
+    const ready = await this.ensure(id);
+    if (gen !== this._gen) return null;
+    if (!ready) {
       VN.error(`мини-игра "${id}" не найдена — засчитано как пропуск`);
       return skipResult();
     }

@@ -117,7 +117,10 @@ function buildStaticControls() {
   });
 }
 
+let loadGeneration = 0;
 async function loadScene(id) {
+  flushDraft();
+  const gen = ++loadGeneration;
   let scene = null, fromWip = false;
   const wip = localStorage.getItem("vn_editor_wip::" + id);
   if (wip) { try { scene = JSON.parse(wip); fromWip = true; } catch { /* битый черновик */ } }
@@ -125,6 +128,7 @@ async function loadScene(id) {
     try { scene = await fetch(`game/scenes/${id}.json`, { cache: "no-cache" }).then(r => r.json()); }
     catch { toast(`✗ Не прочитать game/scenes/${id}.json`, true); return; }
   }
+  if (gen !== loadGeneration) return;
   E.scene = scene; E.sceneId = id; E.sel = -1; E.dirty = fromWip;
   $("#dirty-dot").classList.toggle("hidden", !E.dirty);
   $("#meta-bg").value = scene.bg || "";
@@ -756,6 +760,8 @@ function importScene(e) {
     try {
       const j = JSON.parse(rd.result);
       if (!Array.isArray(j.steps)) throw 0;
+      flushDraft();
+      loadGeneration++;
       E.scene = j;
       E.sceneId = j.id || f.name.replace(/\.json$/, "");
       if (!E.scenes.find(x => x.id === E.sceneId)) E.scenes.push({ id: E.sceneId, title: j.title || E.sceneId });
@@ -775,6 +781,8 @@ function newScene() {
   if (!/^[\w-]+$/.test(id)) return toast("✗ Только латиница, цифры, _ и -", true);
   if (E.scenes.find(x => x.id === id)) return toast("✗ Такая сцена уже есть", true);
   const title = prompt("Название (для меню сейвов):", id) || id;
+  flushDraft();
+  loadGeneration++;
   E.scene = { id, title, steps: [{ narr: "…" }, { end: { title: "Конец" } }] };
   E.sceneId = id; E.sel = 0;
   E.scenes.push({ id, title });
@@ -810,13 +818,17 @@ function showHelp() {
 
 /* ── черновики ── */
 let _wipT = null;
+function flushDraft() {
+  clearTimeout(_wipT);
+  if (!E.dirty || !E.sceneId) return;
+  try { localStorage.setItem("vn_editor_wip::" + E.sceneId, JSON.stringify(E.scene)); }
+  catch { toast("✗ Не удалось сохранить черновик. Экспортируйте сцену в файл.", true); }
+}
 function markDirty() {
   E.dirty = true;
   $("#dirty-dot").classList.remove("hidden");
   clearTimeout(_wipT);
-  _wipT = setTimeout(() => {
-    if (E.sceneId) localStorage.setItem("vn_editor_wip::" + E.sceneId, JSON.stringify(E.scene));
-  }, 400);
+  _wipT = setTimeout(flushDraft, 400);
 }
 
 function toast(msg, bad = false) {
@@ -827,4 +839,4 @@ function toast(msg, bad = false) {
   setTimeout(() => t.remove(), 3200);
 }
 document.addEventListener("DOMContentLoaded", () => boot().catch(e => toast("✗ " + e.message, true)));
-window.addEventListener("beforeunload", e => { if (E.dirty) { e.preventDefault(); e.returnValue = ""; } });
+window.addEventListener("beforeunload", e => { if (E.dirty) { flushDraft(); e.preventDefault(); e.returnValue = ""; } });

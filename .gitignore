@@ -5,3 +5,8 @@ Thumbs.db
 raw_gen/
 qc_*.jpg
 game/assets/audio/_wav/
+
+# Артефакты браузерных прогонов
+undefined/
+test-results/
+playwright-report/
