@@ -168,6 +168,7 @@ VN.parser = {
   /** Загрузка сейва: восстановить картинку/музыку/переменные и продолжить с сохранённого шага */
   async loadSnapshot(snap) {
     this.stop();
+    const gen = this._gen;
     VN.game = VN.state.fresh();
     Object.assign(VN.game.vars, snap.vars || {});
     VN.game.memos = (snap.memos || []).slice();
@@ -175,6 +176,7 @@ VN.parser = {
     VN.ui.setMode(null);
     VN.ui.showStage();
     await VN.renderer.loadManifest();
+    if (gen !== this._gen) return;
     const visual = snap.visual || {};
     VN.renderer.restoreVisual(visual);
     VN.audio.bgm(visual.bgm || null);

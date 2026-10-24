@@ -4,9 +4,6 @@
   "bg": "hq_command",
   "steps": [
     {
-      "bg": "hq_command"
-    },
-    {
       "if": {
         "all": [
           {

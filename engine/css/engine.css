@@ -127,7 +127,8 @@ html, body {
   max-height: 100%;
   overflow-y: auto;
   padding-bottom: calc(var(--sw,400px)*.05);
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(216,201,163,.4) transparent;
 }
 #text::-webkit-scrollbar { display: none; }
 #text.narr { font-style: italic; color: #c9bfa8; text-align: center; margin-top: .4em; }
@@ -186,10 +187,13 @@ html, body {
   border-radius: 14px;
   padding: calc(var(--sw,400px)*.045) calc(var(--sw,400px)*.04);
   backdrop-filter: blur(3px);
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(216,201,163,.4) transparent;
 }
-#choices::-webkit-scrollbar { display: none; }
+#choices::-webkit-scrollbar { width: 4px; }
+#choices::-webkit-scrollbar-thumb { background: rgba(216,201,163,.4); border-radius: 2px; }
 .choice-btn {
+  flex-shrink: 0;
   background: rgba(216,201,163,.07);
   border: 1px solid rgba(216,201,163,.45);
   border-radius: 12px;
@@ -206,6 +210,7 @@ html, body {
 @keyframes choiceIn { from { opacity: 0; transform: translateY(10px); } }
 
 .choice-prompt {
+  flex-shrink: 0;
   color: #c9bfa8; font-style: italic; text-align: center;
   font-size: calc(var(--sw,400px)*.038*var(--ts));
   line-height: 1.35; padding: 0 .3em .15em;
@@ -396,3 +401,6 @@ html, body {
 .mg-marker { position: absolute; top: -10%; bottom: -10%; width: 4px; margin-left: -2px; background: var(--paper); box-shadow: 0 0 8px var(--paper); }
 .mg-marker.hit { background: var(--good); box-shadow: 0 0 12px var(--good); }
 .mg-marker.miss { background: var(--bad); box-shadow: 0 0 12px var(--bad); }
+
+.choice-btn:disabled { opacity: .5; cursor: not-allowed; }
+button:focus-visible { outline: 2px solid var(--paper); outline-offset: 2px; }

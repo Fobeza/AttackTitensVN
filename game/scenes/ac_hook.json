@@ -4,9 +4,6 @@
   "bg": "hq_courtyard",
   "steps": [
     {
-      "bg": "hq_courtyard"
-    },
-    {
       "if": {
         "var": "f_sam_spared",
         "goto": "ah_spared",
@@ -60,6 +57,9 @@
       "label": "ah_spared"
     },
     {
+      "bg": "hq_command"
+    },
+    {
       "show": {
         "char": "erwin",
         "expr": "cold",
@@ -93,7 +93,7 @@
     {
       "say": {
         "who": "Маша",
-        "text": "(Он знает, что я здесь. Он хочет меня. И у него есть месяц.)"
+        "text": "(Он знает, что я здесь. Он хочет меня. И он дал срок до конца месяца.)"
       }
     },
     {

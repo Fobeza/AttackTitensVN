@@ -19,7 +19,9 @@ catch {
 
 const PORT = 8799, BASE = `http://localhost:${PORT}/`;
 const server = await serve(PORT, { log: false });
-const browser = await chromium.launch();
+const browser = await chromium.launch({
+  ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH, args: ["--no-sandbox"] } : {})
+});
 let failed = 0;
 const results = [];
 
@@ -50,11 +52,13 @@ async function until(p, target, max = 60) {
   throw new Error(`не дошли до ${target}`);
 }
 async function test(name, fn) {
+  let timer;
   try {
-    await Promise.race([fn(), new Promise((_, rej) => setTimeout(() => rej(new Error("таймаут 30 с")), 30000))]);
+    await Promise.race([fn(), new Promise((_, rej) => { timer = setTimeout(() => rej(new Error("таймаут 30 с")), 30000); })]);
     results.push(`  ✓ ${name}`);
   }
   catch (e) { failed++; results.push(`  ✗ ${name}\n      ${e.message}`); }
+  finally { clearTimeout(timer); }
 }
 const assert = (c, m) => { if (!c) throw new Error(m); };
 
@@ -347,6 +351,81 @@ await test("Конструктор на телефоне: экраны пере�
   assert(await p.evaluate(() => document.body.dataset.view) === "steps", "«← Шаги» не вернул к списку");
   assert(!errors.length, errors.join("; "));
   await ctx.close();
+});
+
+await test("выключение авто и открытие бэклога отменяют таймер реплики", async () => {
+  const p = await page("?scene=demo&at=2");
+  await p.waitForFunction(() => VN.ui._wait);
+  await p.evaluate(() => VN.ui.advance());
+  for (const panel of [false, true]) {
+    const before = await p.evaluate(open => {
+      VN.ui.settings.autoDelay = 0.01;
+      VN.ui.setMode("auto");
+      if (open) VN.ui.backlog(); else VN.ui.setMode(null);
+      return VN.game.step;
+    }, panel);
+    await p.waitForTimeout(200);
+    assert((await st(p)).step === before, "таймер продвинул остановленный диалог");
+    await p.evaluate(() => VN.ui.closePanel());
+  }
+  await p.context().close();
+});
+
+await test("непрочитанная карточка останавливает пропуск", async () => {
+  const p = await page("?scene=demo&at=2");
+  await p.waitForFunction(() => VN.ui._wait);
+  await p.evaluate(() => {
+    VN.parser.stop(); VN.game.step = 999;
+    VN.ui.setMode("skip"); VN.ui.card("Новая глава");
+  });
+  await p.waitForTimeout(150);
+  assert(await p.locator("#card:not(.hidden)").count() === 1, "непрочитанная карточка пропущена");
+  assert(await p.evaluate(() => VN.ui.mode) === null, "skip не остановлен");
+  await p.context().close();
+});
+
+await test("отмена мини-игры во время загрузки скрипта", async () => {
+  const p = await page("?scene=demo&at=2");
+  const result = await p.evaluate(async () => {
+    VN.parser.stop();
+    VN.minigames.ensure = () => new Promise(r => { window.releaseMg = r; });
+    const pending = VN.minigames.play({ minigame: "quiz" });
+    VN.menu.show(); releaseMg(true);
+    return await pending;
+  });
+  assert(result === null, "отменённая игра запустилась");
+  assert(await p.locator("#minigame:not(.hidden)").count() === 0, "мини-игра перекрыла меню");
+  await p.context().close();
+});
+
+await test("отменённая загрузка сейва не перезапускает сцену", async () => {
+  const p = await page("?scene=demo&at=2");
+  await p.waitForFunction(() => VN.ui._wait);
+  await p.evaluate(async () => {
+    const snap = VN.save.snapshot();
+    VN.renderer.loadManifest = () => new Promise(r => { window.releaseManifest = r; });
+    const pending = VN.parser.loadSnapshot(snap);
+    VN.menu.show(); releaseManifest();
+    await pending;
+  });
+  assert(await p.locator("#menu-screen:not(.hidden)").count() === 1, "меню закрыто");
+  assert(await p.evaluate(() => VN.ui._wait) === null, "сейв создал призрачное ожидание");
+  await p.context().close();
+});
+
+await test("Конструктор сохраняет черновик при быстром переключении сцены", async () => {
+  const p = await browser.newPage();
+  await p.goto(BASE + "editor.html");
+  await p.waitForSelector(".step");
+  const saved = await p.evaluate(async () => {
+    E.scene.title = "Тест черновика";
+    const id = E.sceneId;
+    markDirty();
+    await loadScene("demo");
+    return JSON.parse(localStorage.getItem("vn_editor_wip::" + id))?.title;
+  });
+  assert(saved === "Тест черновика", "правка предыдущей сцены потеряна");
+  await p.close();
 });
 
 await browser.close();
