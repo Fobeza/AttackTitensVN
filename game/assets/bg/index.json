@@ -1,10 +1,16 @@
 [
- "cell_light",
- "han_lab",
- "hq_command",
- "hq_corridor",
- "hq_courtyard",
- "hq_mess",
- "levi_tea",
- "wall_view"
+  "cell_light",
+  "han_lab",
+  "hq_command",
+  "hq_corridor",
+  "hq_courtyard",
+  "hq_mess",
+  "levi_tea",
+  "wall_view",
+  "masha_room",
+  "hq_storage",
+  "hq_rooftop",
+  "hq_corridor_night",
+  "hq_courtyard_dusk",
+  "hq_command_night"
 ]
