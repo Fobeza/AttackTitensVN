@@ -5,9 +5,10 @@
   "scripts": {
     "serve": "node tools/serve.mjs",
     "lint": "node tools/lint_scenes.mjs",
-    "test": "node tools/lint_scenes.mjs --quiet && node tools/story_test.mjs && node tools/story_test_ch2.mjs && node tools/smoke_test.mjs"
+    "test": "node tools/lint_scenes.mjs --quiet && node tools/cg_test.mjs && node tools/story_test.mjs && node tools/story_test_ch2.mjs && node tools/smoke_test.mjs"
   },
   "devDependencies": {
     "playwright": "1.56.1"
-  }
+  },
+  "version": "0.9.0"
 }

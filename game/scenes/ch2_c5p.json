@@ -671,7 +671,7 @@
       "label": "c5p_hange"
     },
     {
-      "bg": "han_lab"
+      "bg": "han_lab_night"
     },
     {
       "show": {
@@ -858,6 +858,9 @@
       "label": "c5p_t_a"
     },
     {
+      "cg": "ch2_tag"
+    },
+    {
       "narr": "Я вышла из комнаты с жетоном в сжатом кулаке. Мне казалось, что стоит ждать до утра, и я передумаю."
     },
     {
@@ -896,6 +899,9 @@
       "label": "c5p_ta_l"
     },
     {
+      "cg": null
+    },
+    {
       "show": {
         "char": "levi",
         "expr": "serious",
@@ -925,12 +931,18 @@
       "label": "c5p_ta_e"
     },
     {
+      "cg": null
+    },
+    {
       "show": {
         "char": "erwin",
         "expr": "thinking",
         "slot": "center",
         "enter": "fade"
       }
+    },
+    {
+      "cg": null
     },
     {
       "say": {
@@ -966,7 +978,7 @@
       "label": "c5p_t_c"
     },
     {
-      "bg": "han_lab"
+      "bg": "han_lab_night"
     },
     {
       "show": {
@@ -992,6 +1004,9 @@
     },
     {
       "label": "c5p_end"
+    },
+    {
+      "cg": null
     },
     {
       "memo": "В воротнике нашёлся костяной жетон: знаки по краю и один выскобленный"

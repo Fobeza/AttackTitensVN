@@ -9,7 +9,11 @@ VN.menu = {
     VN.ui.showMenuScreen();
     const m = document.getElementById("menu-screen");
     const cfg = VN.cfg;
-    m.style.backgroundImage = cfg.menuBg ? `url("${cfg.paths.assets}/bg/${cfg.menuBg}.webp")` : "";
+    // обложка главы на главном экране — как только её CG открыт (game.json → menuCoverCg)
+    const cover = cfg.menuCoverCg && (VN.persist.data.cg || []).includes(cfg.menuCoverCg);
+    m.style.backgroundImage = cover
+      ? `url("${cfg.paths.assets}/cg/${cfg.menuCoverCg}.webp")`
+      : (cfg.menuBg ? `url("${cfg.paths.assets}/bg/${cfg.menuBg}.webp")` : "");
     m.innerHTML = `
       <div class="menu-inner">
         <div id="menu-title">${cfg.titleHtml || esc(cfg.title || "Visual Novel")}</div>

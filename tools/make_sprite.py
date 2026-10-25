@@ -56,6 +56,10 @@ def main():
     ap.add_argument("--bg", action="store_true", help="режим фона (без кеинга)")
     ap.add_argument("--tol", type=int, default=96)
     ap.add_argument("--size", help="ШxВ итогового кадра (по умолчанию 675x1200 спрайт, 720x1280 фон)")
+    ap.add_argument("--scale-from",
+                    help="Спрайт-эталон: масштаб считается по его силуэту, а не по текущему файлу. "
+                         "Нужно для пачки эмоций одного персонажа: иначе каждый кадр вписывается "
+                         "в кадр целиком и фигура «прыгает» по росту между эмоциями.")
     args = ap.parse_args()
     if args.size:
         W, H = (int(v) for v in args.size.lower().split("x"))
@@ -80,7 +84,12 @@ def main():
     img = chroma_key(img, tol=args.tol)
     img = crop_to_alpha(img)
     # вписываем в канвас WxH, фигура по центру, ноги у нижнего края
-    scale = (H - H // 80) / img.height
+    ref_h = img.height
+    if args.scale_from:
+        ref = crop_to_alpha(chroma_key(Image.open(args.scale_from), tol=args.tol))
+        if ref.getbbox():
+            ref_h = ref.height
+    scale = (H - H // 80) / ref_h
     new_w = round(img.width * scale)
     if new_w > W:
         scale = W / img.width

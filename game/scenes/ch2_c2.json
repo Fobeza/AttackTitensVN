@@ -73,7 +73,7 @@
     {
       "show": {
         "char": "levi",
-        "expr": "neutral",
+        "expr": "levi_teapot",
         "slot": "center",
         "enter": "fade"
       }
@@ -227,6 +227,14 @@
     },
     {
       "narr": "Мы пили молча. Леви придвинул под больную ногу сложенный плащ и сделал вид, что это ничего не значит. Я сделала вид, что поверила."
+    },
+    {
+      "show": {
+        "char": "levi",
+        "expr": "eyes_closed",
+        "slot": "center",
+        "enter": "fade"
+      }
     },
     {
       "goto": "c2_l_end"
@@ -469,6 +477,14 @@
     },
     {
       "narr": "Потом он развернул карту и показал путь, по которому, по его словам, мог двигаться человек, чьи письма перехватил корпус. Деревни вдоль реки, четыре поворота, брод."
+    },
+    {
+      "show": {
+        "char": "erwin",
+        "expr": "erwin_map",
+        "slot": "center",
+        "enter": "fade"
+      }
     },
     {
       "say": {
@@ -1041,7 +1057,7 @@
     {
       "show": {
         "char": "sam",
-        "expr": "grin",
+        "expr": "plotting",
         "slot": "center",
         "enter": "fade"
       }
@@ -1051,6 +1067,14 @@
         "who": "Сэм",
         "text": "Маша! Форма сидит. Слушай, а правда, что на присяге бесплатно кормят? Я бы пошёл ради этого второй раз.",
         "expr": "laugh"
+      }
+    },
+    {
+      "show": {
+        "char": "sam",
+        "expr": "grin",
+        "slot": "center",
+        "enter": "fade"
       }
     },
     {
@@ -1158,6 +1182,14 @@
         "who": "Сэм",
         "text": "Если будет минутка. Не сейчас. Про мать. Я знаю, что не имею права просить.",
         "expr": "serious"
+      }
+    },
+    {
+      "show": {
+        "char": "sam",
+        "expr": "pleading",
+        "slot": "center",
+        "enter": "fade"
       }
     },
     {
@@ -1351,7 +1383,7 @@
       }
     },
     {
-      "bg": "hq_corridor_night"
+      "bg": "hq_corridor_dawn"
     },
     {
       "narr": "Одна встреча позади. Оставалось время ещё на одну."
@@ -1363,7 +1395,7 @@
       "label": "w1_night"
     },
     {
-      "bg": "hq_corridor_night"
+      "bg": "hq_corridor_dawn"
     },
     {
       "hide": "all"

@@ -133,7 +133,7 @@
     },
     {
       "show": {
-        "char": "npc_soldier",
+        "char": "npc_recruit_holz",
         "expr": "neutral",
         "slot": "center",
         "enter": "fade"
