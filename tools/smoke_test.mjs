@@ -428,6 +428,64 @@ await test("Конструктор сохраняет черновик при б
   await p.close();
 });
 
+// --- мини-игры Главы 2: запускаем напрямую и играем через data-атрибуты root ---
+async function playMg(p, step, drive) {
+  const res = p.evaluate(s => VN.minigames.play(s), step);
+  await p.waitForSelector(".mg-intro .mg-btn");
+  await p.click(".mg-intro .mg-btn");
+  await drive();
+  return res;
+}
+await test("мини-игра «Чаепитие»: три чашки в зелёную зону — победа", async () => {
+  const p = await page("?scene=demo");
+  const r = await playMg(p, { minigame: "tea", params: { cups: 3, need: 2 } }, async () => {
+    for (let c = 0; c < 3; c++) {
+      await p.waitForTimeout(800);
+      const [lo, hi] = (await p.evaluate(() => document.querySelector(".mg-body").dataset.zone)).split("-").map(Number);
+      const box = await p.locator(".tea-btn").boundingBox();
+      await p.mouse.move(box.x + 10, box.y + 10); await p.mouse.down();
+      await p.waitForFunction(([a, b]) => +document.querySelector(".mg-body").dataset.level >= (a + b) / 2, [lo, hi], { timeout: 5000, polling: 10 });
+      await p.mouse.up();
+    }
+  });
+  assert(r.win && r.score === 3, JSON.stringify(r));
+  assert(!p.errors.length, p.errors.join("; "));
+  await p.context().close();
+});
+await test("мини-игра «Сверка донесений»: ошибок больше допустимого — поражение", async () => {
+  const p = await page("?scene=demo");
+  const params = { a: { title: "A", lines: ["x"] }, b: { title: "B", lines: [{ t: "1", x: true }, { t: "2", x: false }, { t: "3", x: false }, { t: "4", x: true }] }, mistakes: 1 };
+  const r = await playMg(p, { minigame: "dispatch", params }, async () => {
+    for (const t of ["2", "3"]) await p.click(`.dsp-b button:text-is("${t}")`);
+  });
+  assert(!r.win && r.score === 0, JSON.stringify(r));
+  await p.context().close();
+});
+await test("мини-игра «Знаки жетона»: встроенные ряды решаются", async () => {
+  const p = await page("?scene=demo");
+  const r = await playMg(p, { minigame: "cipher" }, async () => {
+    for (let i = 0; i < 3; i++) {
+      const a = await p.evaluate(() => document.querySelector(".mg-body").dataset.answer);
+      await p.click(`.cph-opts button:text-is("${a}")`); await p.waitForTimeout(80);
+    }
+  });
+  assert(r.win && r.score === 3, JSON.stringify(r));
+  await p.context().close();
+});
+await test("мини-игра «Доска улик»: показывает только найденные улики и не засчитывает неподтверждаемые выводы", async () => {
+  const p = await page("?scene=demo");
+  await p.evaluate(() => Object.assign(VN.game.vars, { f_ch2_ocean: true }));
+  const params = { need: 1, goals: [{ text: "G1", ok: ["stamp"] }, { text: "G2", ok: ["ocean"] }],
+    clues: [{ id: "stamp", text: "С1", var: "s_stamp" }, { id: "ocean", text: "С2", var: "f_ch2_ocean" }] };
+  const r = await playMg(p, { minigame: "evidence", params }, async () => {
+    assert(await p.locator(".evd-box button", { hasText: "С1" }).count() === 0, "улика без флага показана");
+    assert(await p.locator(".evd-box button", { hasText: "G1" }).isDisabled(), "вывод без улик не заблокирован");
+    await p.click('.evd-box button:text("G2")'); await p.click('.evd-box button:text("С2")');
+  });
+  assert(r.win && r.score === 1, JSON.stringify(r));
+  await p.context().close();
+});
+
 await browser.close();
 server.close();
 console.log(results.join("\n"));

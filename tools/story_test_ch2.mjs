@@ -13,7 +13,7 @@ const FLAGS = ["f_defiant", "f_coop", "f_clean", "f_lab", "f_told_tune", "f_repo
   "f_pressed_sam", "f_tone_soft", "f_levi_hurt", "f_side_none", "f_escape", "f_tune"];
 const routes = ["levi", "erwin", "hange", ""];
 const sam = ["spared", "arrested", "none"];
-const seen = { route: new Set(), sam: new Set(), mentor: new Set(), oath: new Set(), swap: new Set(), caught: new Set() };
+const seen = { route: new Set(), sam: new Set(), mentor: new Set(), oath: new Set(), swap: new Set(), caught: new Set(), lead: new Set(), secrets: new Set(), young: new Set() };
 const N = 600;
 for (let seed = 1; seed <= N; seed++) {
   let rng = seed, turns = 0, ended = null;
@@ -63,10 +63,16 @@ for (let seed = 1; seed <= N; seed++) {
   seen.route.add(v.route); seen.mentor.add(v.mentor); seen.oath.add(v.oath); seen.swap.add(!!v.f_ch2_swap);
   assert(v.f_ch2_name, `name, seed ${seed}`);
   seen.caught.add(!!v.f_ch2_cloak_caught);
+  seen.lead.add(!!v.f_ch2_lead); seen.secrets.add(v.secrets); seen.young.add(!!v.f_ch2_young_lead);
+  assert(v.secrets === ["s_stamp", "s_bills", "s_ledger", "s_glyph", "s_book"].filter(k => v[k]).length, `secrets counter mismatch, seed ${seed}`);
+  if (v.f_ch2_young_lead) assert(v.secrets >= 4, `bonus scene without enough secrets, seed ${seed}`);
   seen.sam.add(`${v.f_sam_spared}/${v.f_sam_arrested}`);
 }
 for (const m of ["levi", "erwin", "hange"]) assert(seen.mentor.has(m), `mentor ${m} not reached`);
 for (const o of ["corps", "person", "truth"]) assert(seen.oath.has(o), `oath ${o} not reached`);
 assert(seen.swap.has(true) && seen.swap.has(false), "mentor swap not exercised both ways");
 assert(seen.caught.has(true) && seen.caught.has(false), "both C7 outcomes (caught / escaped) must be reachable");
-console.log(`✓ ${N} Chapter 2 playthroughs from random Chapter 1 saves: no dead choices/loops, all mentors, oaths and the mentor swap and both C7 outcomes reached`);
+assert(seen.lead.has(true) && seen.lead.has(false), "evidence board: both outcomes must be reachable");
+assert(seen.young.has(true) && seen.young.has(false), "bonus hook (>=4 secrets) must be reachable and optional");
+assert(Math.max(...seen.secrets) >= 4, "at least 4 secrets must be findable in one run");
+console.log(`✓ ${N} Chapter 2 playthroughs from random Chapter 1 saves: no dead choices/loops, all mentors, oaths and the mentor swap and both C7 outcomes, the evidence board and the secrets bonus reached`);

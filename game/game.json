@@ -288,6 +288,31 @@
     },
     "f_ch2_ingrid": {
       "default": false
+    },
+    "secrets": {
+      "default": 0,
+      "title": "Секретов найдено"
+    },
+    "s_stamp": {
+      "default": false
+    },
+    "s_bills": {
+      "default": false
+    },
+    "s_ledger": {
+      "default": false
+    },
+    "s_glyph": {
+      "default": false
+    },
+    "s_book": {
+      "default": false
+    },
+    "f_ch2_lead": {
+      "default": false
+    },
+    "f_ch2_young_lead": {
+      "default": false
     }
   },
   "speakers": [
@@ -397,6 +422,10 @@
   "galleryText": "CG откроются по мере прохождения.",
   "minigames": {
     "cleaning": "game/minigames/cleaning.js",
-    "lab": "game/minigames/lab.js"
+    "lab": "game/minigames/lab.js",
+    "tea": "game/minigames/tea.js",
+    "dispatch": "game/minigames/dispatch.js",
+    "cipher": "game/minigames/cipher.js",
+    "evidence": "game/minigames/evidence.js"
   }
 }
