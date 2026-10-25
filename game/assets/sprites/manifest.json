@@ -120,55 +120,55 @@
   "name": "Эрвин",
   "neutral": {
    "file": "erwin_neutral.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "smile": {
    "file": "erwin_smile.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "cold": {
    "file": "erwin_cold.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "angry": {
    "file": "erwin_angry.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "thinking": {
    "file": "erwin_thinking.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "surprised": {
    "file": "erwin_surprised.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "schemer": {
    "file": "erwin_schemer.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "tired": {
    "file": "erwin_tired.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "inspiring": {
    "file": "erwin_inspiring.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "salute": {
    "file": "erwin_salute.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "soft": {
    "file": "erwin_soft.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "erwin_scissors": {
    "file": "erwin_scissors.webp",
-   "height": 0.66
+   "height": 0.62
   },
   "erwin_map": {
    "file": "erwin_map.webp",
-   "height": 0.66
+   "height": 0.62
   }
  },
  "armin": {

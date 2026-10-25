@@ -311,6 +311,14 @@
       "label": "c0_g_a"
     },
     {
+      "show": {
+        "char": "levi",
+        "expr": "serious",
+        "slot": "right",
+        "enter": "fade"
+      }
+    },
+    {
       "say": {
         "who": "Леви",
         "text": "Это решит Эрвин. Но я передам.",
@@ -325,6 +333,14 @@
     },
     {
       "label": "c0_g_b"
+    },
+    {
+      "show": {
+        "char": "levi",
+        "expr": "serious",
+        "slot": "right",
+        "enter": "fade"
+      }
     },
     {
       "say": {
