@@ -51,6 +51,14 @@
     "blush": {
       "file": "levi_blush.webp",
       "height": 0.547
+    },
+    "levi_scissors": {
+      "file": "levi_scissors.webp",
+      "height": 0.547
+    },
+    "levi_teapot": {
+      "file": "levi_teapot.webp",
+      "height": 0.547
     }
   },
   "hange": {
@@ -98,6 +106,14 @@
     "laugh": {
       "file": "hange_laugh.webp",
       "height": 0.593
+    },
+    "hange_scissors": {
+      "file": "hange_scissors.webp",
+      "height": 0.593
+    },
+    "hange_ladle": {
+      "file": "hange_ladle.webp",
+      "height": 0.593
     }
   },
   "erwin": {
@@ -144,6 +160,14 @@
     },
     "soft": {
       "file": "erwin_soft.webp",
+      "height": 0.66
+    },
+    "erwin_scissors": {
+      "file": "erwin_scissors.webp",
+      "height": 0.66
+    },
+    "erwin_map": {
+      "file": "erwin_map.webp",
       "height": 0.66
     }
   },
@@ -239,6 +263,10 @@
     "sensing": {
       "file": "mikasa_sensing.webp",
       "height": 0.593
+    },
+    "mikasa_cup": {
+      "file": "mikasa_cup.webp",
+      "height": 0.593
     }
   },
   "eren": {
@@ -333,6 +361,10 @@
     "worried": {
       "file": "petra_worried.webp",
       "height": 0.57
+    },
+    "petra_tray": {
+      "file": "petra_tray.webp",
+      "height": 0.57
     }
   },
   "jean": {
@@ -379,6 +411,10 @@
     },
     "awkward": {
       "file": "jean_awkward.webp",
+      "height": 0.593
+    },
+    "jean_sweets": {
+      "file": "jean_sweets.webp",
       "height": 0.593
     }
   },
@@ -466,6 +502,10 @@
     },
     "broken_smile": {
       "file": "sam_broken_smile.webp",
+      "height": 0.607
+    },
+    "sam_key": {
+      "file": "sam_key.webp",
       "height": 0.607
     }
   },
