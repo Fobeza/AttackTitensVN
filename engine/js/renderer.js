@@ -31,6 +31,8 @@ VN.renderer = {
   bg(name, instant = false) {
     const el = document.getElementById("bg");
     VN.game.visual.bg = name || null;
+    // смена фона — конец CG-вставки: иначе картинка может остаться поверх новой сцены
+    if (name && VN.game.visual.cg) { VN.game.visual.cg = null; document.getElementById("cg").classList.remove("visible"); }
     const token = ++this._bgToken;          // последняя смена побеждает, даже если картинки грузятся вразнобой
     if (!name) {
       el.style.opacity = 0;

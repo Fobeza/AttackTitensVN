@@ -651,9 +651,6 @@
       "label": "c3_night"
     },
     {
-      "cg": "ch2_lullaby"
-    },
-    {
       "hide": "all"
     },
     {
@@ -667,6 +664,9 @@
     },
     {
       "bg": "dream_memory"
+    },
+    {
+      "cg": "ch2_lullaby"
     },
     {
       "narr": "Потом пришла мелодия."
