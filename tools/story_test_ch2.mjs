@@ -13,7 +13,7 @@ const FLAGS = ["f_defiant", "f_coop", "f_clean", "f_lab", "f_told_tune", "f_repo
   "f_pressed_sam", "f_tone_soft", "f_levi_hurt", "f_side_none", "f_escape", "f_tune"];
 const routes = ["levi", "erwin", "hange", ""];
 const sam = ["spared", "arrested", "none"];
-const seen = { route: new Set(), sam: new Set(), mentor: new Set(), oath: new Set(), swap: new Set() };
+const seen = { route: new Set(), sam: new Set(), mentor: new Set(), oath: new Set(), swap: new Set(), caught: new Set() };
 const N = 600;
 for (let seed = 1; seed <= N; seed++) {
   let rng = seed, turns = 0, ended = null;
@@ -55,15 +55,18 @@ for (let seed = 1; seed <= N; seed++) {
   v.lei = random(9); v.erw = random(9); v.han = random(9); v.trust = random(7); v.truth = random(5);
   await VN.parser.run("ch2_c1");
   assert(ended, `no end card, seed ${seed}`);
-  assert.equal(VN.game.scene, "ch2_c6", `ended in ${VN.game.scene}, seed ${seed}`);
+  assert.equal(VN.game.scene, "ch2_c7", `ended in ${VN.game.scene}, seed ${seed}`);
   assert.equal(v.w1, 2, `week 1 meetings, seed ${seed}`);
   assert.equal(v.w2, 2, `week 2 meetings, seed ${seed}`);
   assert(["levi", "erwin", "hange"].includes(v.mentor), `mentor, seed ${seed}`);
   assert(["corps", "person", "truth"].includes(v.oath), `oath, seed ${seed}`);
   seen.route.add(v.route); seen.mentor.add(v.mentor); seen.oath.add(v.oath); seen.swap.add(!!v.f_ch2_swap);
+  assert(v.f_ch2_name, `name, seed ${seed}`);
+  seen.caught.add(!!v.f_ch2_cloak_caught);
   seen.sam.add(`${v.f_sam_spared}/${v.f_sam_arrested}`);
 }
 for (const m of ["levi", "erwin", "hange"]) assert(seen.mentor.has(m), `mentor ${m} not reached`);
 for (const o of ["corps", "person", "truth"]) assert(seen.oath.has(o), `oath ${o} not reached`);
 assert(seen.swap.has(true) && seen.swap.has(false), "mentor swap not exercised both ways");
-console.log(`✓ ${N} Chapter 2 playthroughs from random Chapter 1 saves: no dead choices/loops, all mentors, oaths and the mentor swap reached`);
+assert(seen.caught.has(true) && seen.caught.has(false), "both C7 outcomes (caught / escaped) must be reachable");
+console.log(`✓ ${N} Chapter 2 playthroughs from random Chapter 1 saves: no dead choices/loops, all mentors, oaths and the mentor swap and both C7 outcomes reached`);

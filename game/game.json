@@ -270,6 +270,15 @@
     },
     "f_ch2_hair_short": {
       "default": false
+    },
+    "f_ch2_name": {
+      "default": false
+    },
+    "f_ch2_remnant": {
+      "default": false
+    },
+    "f_ch2_cloak_caught": {
+      "default": false
     }
   },
   "speakers": [
@@ -349,6 +358,10 @@
     {
       "id": "ch2_c6",
       "title": "Гл. 2 · Присяга и стрижка"
+    },
+    {
+      "id": "ch2_c7",
+      "title": "Гл. 2 · Выезд"
     },
     {
       "id": "demo",
