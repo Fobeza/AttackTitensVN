@@ -26,6 +26,7 @@
 
 ```bash
 node tools/lint_scenes.mjs        # после ЛЮБОЙ правки game/ — должно быть «✓ ошибок нет»
+node tools/cg_test.mjs            # после правки сцен с CG: утечки CG и недостижимые шаги
 node tools/smoke_test.mjs         # после правки engine/ (нужен playwright, см. README)
 ```
 

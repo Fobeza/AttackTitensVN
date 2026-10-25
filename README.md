@@ -1,5 +1,8 @@
 # Под крыльями свободы — фанатская визуальная новелла
 
+**Версия 0.9** — Глава 2 полностью одета: 37 фонов, 173 кадра спрайтов, 9 CG.
+Что изменилось: [`CHANGELOG.md`](CHANGELOG.md).
+
 Вертикальная (9:16, mobile-first) фан-игра по мотивам «Атаки титанов».
 **Согласованное AU:** Петра пережила 57-ю экспедицию. Маша и Сэм — авторские персонажи;
 история разворачивается между 2-м и 3-м сезонами.
@@ -31,6 +34,7 @@ node tools/serve.mjs          # или: npm run serve
 node tools/lint_scenes.mjs    # строгая проверка сцен, конфига и файлов — после любой правки game/
 node tools/story_test.mjs     # 400 воспроизводимых прогонов сюжетных развилок Главы 1
 node tools/story_test_ch2.mjs # 600 прогонов Главы 2 из случайных исходов Главы 1
+node tools/cg_test.mjs        # CG закрывается на всех ветках, недостижимых шагов нет
 node tools/smoke_test.mjs     # прогон движка в headless-браузере — после правки engine/
 ```
 Смоук-тесту нужен Playwright (один раз): `npm install && npx playwright install chromium`.
@@ -44,7 +48,7 @@ node tools/smoke_test.mjs     # прогон движка в headless-брауз
 | `engine/js/schema.js` | **формат шагов** — общий для движка, Конструктора и линтера |
 | `game/game.json` | конфиг игры: название, меню, тема, переменные, сцены, звуки, галерея |
 | `game/scenes/*.json` | сцены |
-| `game/assets/` | спрайты (+`manifest.json`), фоны (+`index.json`), CG, аудио |
+| `game/assets/` | спрайты (+`manifest.json`), фоны (+`index.json`), CG (+`game.json → gallery`), аудио |
 | `editor.html`, `editor/` | Конструктор сцен |
 | `tools/` | линтер, смоук-тест, сервер, обработка арта и звука |
 | `docs/` | документация (см. ниже) |
@@ -58,6 +62,9 @@ node tools/smoke_test.mjs     # прогон движка в headless-брауз
 - [`docs/MINIGAMES.md`](docs/MINIGAMES.md) — API мини-игр и встроенные `timing`, `quiz`
 - [`docs/ASSETS.md`](docs/ASSETS.md) — размеры и подключение спрайтов, фонов, CG, звука
 - [`docs/EDITOR.md`](docs/EDITOR.md) — как пользоваться Конструктором
+- [`docs/CH2_ASSETS_TODO.md`](docs/CH2_ASSETS_TODO.md) — бэклог арта Главы 2 и его статус
+- [`docs/CH2_PROMPTS.md`](docs/CH2_PROMPTS.md) — готовые промпты: спрайты, фоны, CG, музыка, звуки
+- [`CHANGELOG.md`](CHANGELOG.md) — что менялось между версиями
 
 ## Как дать задание другому ИИ
 
