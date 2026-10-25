@@ -12,5 +12,15 @@
   "hq_rooftop",
   "hq_corridor_night",
   "hq_courtyard_dusk",
-  "hq_command_night"
+  "hq_command_night",
+  "town_market",
+  "town_alley",
+  "hq_kitchen",
+  "hq_stables",
+  "warehouse_loft",
+  "hq_courtyard_night",
+  "hq_courtyard_storm",
+  "wall_view_night",
+  "hq_parade_dawn",
+  "hq_infirmary"
 ]
