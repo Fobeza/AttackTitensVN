@@ -234,6 +234,33 @@
     },
     "f_ch2_ocean": {
       "default": false
+    },
+    "w2": {
+      "default": 0
+    },
+    "f_w2_levi": {
+      "default": false
+    },
+    "f_w2_erw": {
+      "default": false
+    },
+    "f_w2_han": {
+      "default": false
+    },
+    "f_w2_sold": {
+      "default": false
+    },
+    "f_ch2_swap": {
+      "default": false
+    },
+    "f_ch2_tag": {
+      "default": false
+    },
+    "f_ch2_tag_hidden": {
+      "default": false
+    },
+    "f_ch2_armin_book": {
+      "default": false
     }
   },
   "speakers": [
@@ -301,6 +328,14 @@
     {
       "id": "ch2_c4",
       "title": "Гл. 2 · Вести из Столицы"
+    },
+    {
+      "id": "ch2_c5",
+      "title": "Гл. 2 · Неделя вторая"
+    },
+    {
+      "id": "ch2_c5p",
+      "title": "Гл. 2 · Личные сцены"
     },
     {
       "id": "demo",
