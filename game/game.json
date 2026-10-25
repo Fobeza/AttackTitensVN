@@ -228,6 +228,12 @@
     },
     "f_ch2_body": {
       "default": false
+    },
+    "f_ch2_silent": {
+      "default": false
+    },
+    "f_ch2_ocean": {
+      "default": false
     }
   },
   "speakers": [
@@ -291,6 +297,10 @@
     {
       "id": "ch2_c3",
       "title": "Гл. 2 · Тренировка"
+    },
+    {
+      "id": "ch2_c4",
+      "title": "Гл. 2 · Вести из Столицы"
     },
     {
       "id": "demo",
