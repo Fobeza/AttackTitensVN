@@ -88,6 +88,14 @@
       "narr": "Петра налила чаю в лишнюю кружку и поставила рядом с пустым местом, ничего не объясняя. Никто не спросил, для кого."
     },
     {
+      "show": {
+        "char": "petra",
+        "expr": "petra_tray",
+        "slot": "right",
+        "enter": "fade"
+      }
+    },
+    {
       "label": "c_i4_jean"
     },
     {
@@ -200,6 +208,14 @@
     },
     {
       "show": {
+        "char": "armin",
+        "expr": "crying",
+        "slot": "center",
+        "enter": "fade"
+      }
+    },
+    {
+      "show": {
         "char": "mikasa",
         "expr": "neutral",
         "slot": "right",
@@ -222,6 +238,14 @@
     },
     {
       "narr": "Микаса сидела рядом, чуть касаясь его плечом, и смотрела на огонь. Я сделала вид, что не заметила, как тихо у неё дрогнуло горло."
+    },
+    {
+      "show": {
+        "char": "mikasa",
+        "expr": "mikasa_cup",
+        "slot": "right",
+        "enter": "fade"
+      }
     },
     {
       "say": {
