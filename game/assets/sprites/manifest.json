@@ -427,6 +427,46 @@
     "plotting": {
       "file": "sam_plotting.webp",
       "height": 0.607
+    },
+    "hollow": {
+      "file": "sam_hollow.webp",
+      "height": 0.607
+    },
+    "caught": {
+      "file": "sam_caught.webp",
+      "height": 0.607
+    },
+    "ashamed": {
+      "file": "sam_ashamed.webp",
+      "height": 0.607
+    },
+    "exhausted": {
+      "file": "sam_exhausted.webp",
+      "height": 0.607
+    },
+    "honest": {
+      "file": "sam_honest.webp",
+      "height": 0.607
+    },
+    "pleading": {
+      "file": "sam_pleading.webp",
+      "height": 0.607
+    },
+    "cornered": {
+      "file": "sam_cornered.webp",
+      "height": 0.607
+    },
+    "whisper": {
+      "file": "sam_whisper.webp",
+      "height": 0.607
+    },
+    "blank": {
+      "file": "sam_blank.webp",
+      "height": 0.607
+    },
+    "broken_smile": {
+      "file": "sam_broken_smile.webp",
+      "height": 0.607
     }
   },
   "npc_soldier": {
