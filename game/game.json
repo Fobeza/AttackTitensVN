@@ -261,6 +261,15 @@
     },
     "f_ch2_armin_book": {
       "default": false
+    },
+    "oath": {
+      "default": ""
+    },
+    "oath_stumble": {
+      "default": false
+    },
+    "f_ch2_hair_short": {
+      "default": false
     }
   },
   "speakers": [
@@ -336,6 +345,10 @@
     {
       "id": "ch2_c5p",
       "title": "Гл. 2 · Личные сцены"
+    },
+    {
+      "id": "ch2_c6",
+      "title": "Гл. 2 · Присяга и стрижка"
     },
     {
       "id": "demo",

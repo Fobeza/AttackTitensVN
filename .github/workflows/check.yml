@@ -12,6 +12,8 @@ jobs:
         run: node tools/lint_scenes.mjs --quiet
       - name: Сюжетные прогоны
         run: node tools/story_test.mjs
+      - name: Сюжетные прогоны Главы 2
+        run: node tools/story_test_ch2.mjs
       - name: Смоук-тест движка
         run: |
           npm ci --no-audit --no-fund
