@@ -1,6 +1,7 @@
 name: check
 on: [push, pull_request]
 jobs:
+  # Обязательные проверки: конфиг, сцены, сюжет, CG. Без сети и без браузера.
   check:
     runs-on: ubuntu-latest
     steps:
@@ -16,9 +17,20 @@ jobs:
         run: node tools/story_test_ch2.mjs
       - name: CG и достижимость шагов
         run: node tools/cg_test.mjs
+
+  # Движок в настоящем браузере. Отдельная job: если CDN Playwright недоступен,
+  # это видно по ней, но не блокирует остальные проверки и сборку релиза.
+  smoke:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Зависимости
         run: npm ci --no-audit --no-fund
       - name: Chromium для смоук-теста
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
       - name: Смоук-тест движка
         run: node tools/smoke_test.mjs
