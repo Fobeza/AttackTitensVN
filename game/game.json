@@ -196,6 +196,35 @@
     },
     "proof": {
       "default": 0
+    },
+    "mentor": {
+      "default": "",
+      "title": "Наставник"
+    },
+    "w1": {
+      "default": 0,
+      "title": "Встречи недели 1"
+    },
+    "f_w1_levi": {
+      "default": false
+    },
+    "f_w1_erw": {
+      "default": false
+    },
+    "f_w1_han": {
+      "default": false
+    },
+    "f_w1_sold": {
+      "default": false
+    },
+    "f_w1_sketch": {
+      "default": false
+    },
+    "f_ch2_mother": {
+      "default": false
+    },
+    "f_ch2_lullaby": {
+      "default": false
     }
   },
   "speakers": [
@@ -247,6 +276,14 @@
     {
       "id": "end_lock",
       "title": "Финал: под замком"
+    },
+    {
+      "id": "ch2_c1",
+      "title": "Гл. 2 · Первое утро"
+    },
+    {
+      "id": "ch2_c2",
+      "title": "Гл. 2 · Первая неделя"
     },
     {
       "id": "demo",
