@@ -446,7 +446,43 @@
   "npc_cook": {
     "name": "Повар",
     "neutral": {
-      "file": "npc_cook.webp",
+      "file": "npc_cook_neutral.webp",
+      "height": 0.577
+    },
+    "smile": {
+      "file": "npc_cook_smile.webp",
+      "height": 0.577
+    },
+    "smirk": {
+      "file": "npc_cook_smirk.webp",
+      "height": 0.577
+    },
+    "stern": {
+      "file": "npc_cook_stern.webp",
+      "height": 0.577
+    },
+    "annoyed": {
+      "file": "npc_cook_annoyed.webp",
+      "height": 0.577
+    },
+    "tired": {
+      "file": "npc_cook_tired.webp",
+      "height": 0.577
+    },
+    "surprised": {
+      "file": "npc_cook_surprised.webp",
+      "height": 0.577
+    },
+    "laugh": {
+      "file": "npc_cook_laugh.webp",
+      "height": 0.577
+    },
+    "proud": {
+      "file": "npc_cook_proud.webp",
+      "height": 0.577
+    },
+    "sigh": {
+      "file": "npc_cook_sigh.webp",
       "height": 0.577
     }
   },
