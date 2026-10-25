@@ -504,5 +504,45 @@
       "file": "grey_cloak_notebook.webp",
       "height": 0.58
     }
+  },
+  "masha_uniform": {
+    "name": "Маша",
+    "color": "#cfe3c9",
+    "neutral": {
+      "file": "masha_uniform_neutral.webp",
+      "height": 0.532
+    },
+    "smirk": {
+      "file": "masha_uniform_smirk.webp",
+      "height": 0.532
+    },
+    "scared": {
+      "file": "masha_uniform_scared.webp",
+      "height": 0.532
+    },
+    "determined": {
+      "file": "masha_uniform_determined.webp",
+      "height": 0.532
+    },
+    "tired": {
+      "file": "masha_uniform_tired.webp",
+      "height": 0.532
+    },
+    "soft": {
+      "file": "masha_uniform_soft.webp",
+      "height": 0.532
+    },
+    "sad": {
+      "file": "masha_uniform_sad.webp",
+      "height": 0.532
+    },
+    "thinking": {
+      "file": "masha_uniform_thinking.webp",
+      "height": 0.532
+    },
+    "defiant": {
+      "file": "masha_uniform_defiant.webp",
+      "height": 0.532
+    }
   }
 }
