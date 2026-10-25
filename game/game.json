@@ -279,6 +279,15 @@
     },
     "f_ch2_cloak_caught": {
       "default": false
+    },
+    "f_ch2_tag_shown": {
+      "default": false
+    },
+    "f_ch2_stay_masha": {
+      "default": false
+    },
+    "f_ch2_ingrid": {
+      "default": false
     }
   },
   "speakers": [
@@ -362,6 +371,10 @@
     {
       "id": "ch2_c7",
       "title": "Гл. 2 · Выезд"
+    },
+    {
+      "id": "ch2_c8",
+      "title": "Гл. 2 · Финал главы"
     },
     {
       "id": "demo",

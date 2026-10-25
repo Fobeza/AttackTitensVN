@@ -55,7 +55,7 @@ for (let seed = 1; seed <= N; seed++) {
   v.lei = random(9); v.erw = random(9); v.han = random(9); v.trust = random(7); v.truth = random(5);
   await VN.parser.run("ch2_c1");
   assert(ended, `no end card, seed ${seed}`);
-  assert.equal(VN.game.scene, "ch2_c7", `ended in ${VN.game.scene}, seed ${seed}`);
+  assert.equal(VN.game.scene, "ch2_c8", `ended in ${VN.game.scene}, seed ${seed}`);
   assert.equal(v.w1, 2, `week 1 meetings, seed ${seed}`);
   assert.equal(v.w2, 2, `week 2 meetings, seed ${seed}`);
   assert(["levi", "erwin", "hange"].includes(v.mentor), `mentor, seed ${seed}`);
