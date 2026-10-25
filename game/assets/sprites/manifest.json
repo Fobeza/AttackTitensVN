@@ -516,13 +516,6 @@
    "height": 0.593
   }
  },
- "npc_scout": {
-  "name": "Разведчица",
-  "neutral": {
-   "file": "npc_soldier_f.webp",
-   "height": 0.562
-  }
- },
  "npc_cook": {
   "name": "Повар",
   "neutral": {

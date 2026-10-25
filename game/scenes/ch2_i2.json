@@ -71,6 +71,14 @@
       }
     },
     {
+      "show": {
+        "char": "sam",
+        "expr": "laugh",
+        "slot": "right",
+        "enter": "fade"
+      }
+    },
+    {
       "say": {
         "who": "Повар",
         "text": "Заткнись и режь.",
@@ -405,6 +413,14 @@
       }
     },
     {
+      "show": {
+        "char": "hange",
+        "expr": "angry",
+        "slot": "center",
+        "enter": "fade"
+      }
+    },
+    {
       "choice": [
         {
           "text": "Помочь Ханджи отвлечь Повара",
@@ -590,6 +606,14 @@
       "narr": "Вечером мы поели вместе: те, кто готовил, и те, кому повезло оказаться рядом. Суп вышел густой, тёплый и, к удивлению всех, вкусный. Чуть-чуть пах корицей. Никто не спрашивал, откуда."
     },
     {
+      "show": {
+        "char": "npc_cook",
+        "expr": "laugh",
+        "slot": "center",
+        "enter": "fade"
+      }
+    },
+    {
       "if": {
         "var": "f_sam_arrested",
         "eq": true,
@@ -606,7 +630,7 @@
     {
       "show": {
         "char": "sam",
-        "expr": "laugh",
+        "expr": "broken_smile",
         "slot": "right",
         "enter": "right"
       }

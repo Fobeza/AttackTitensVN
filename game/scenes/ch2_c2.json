@@ -1057,7 +1057,7 @@
     {
       "show": {
         "char": "sam",
-        "expr": "grin",
+        "expr": "plotting",
         "slot": "center",
         "enter": "fade"
       }
@@ -1067,6 +1067,14 @@
         "who": "Сэм",
         "text": "Маша! Форма сидит. Слушай, а правда, что на присяге бесплатно кормят? Я бы пошёл ради этого второй раз.",
         "expr": "laugh"
+      }
+    },
+    {
+      "show": {
+        "char": "sam",
+        "expr": "grin",
+        "slot": "center",
+        "enter": "fade"
       }
     },
     {
@@ -1174,6 +1182,14 @@
         "who": "Сэм",
         "text": "Если будет минутка. Не сейчас. Про мать. Я знаю, что не имею права просить.",
         "expr": "serious"
+      }
+    },
+    {
+      "show": {
+        "char": "sam",
+        "expr": "pleading",
+        "slot": "center",
+        "enter": "fade"
       }
     },
     {

@@ -387,6 +387,14 @@
       }
     },
     {
+      "show": {
+        "char": "armin",
+        "expr": "smile",
+        "slot": "right",
+        "enter": "fade"
+      }
+    },
+    {
       "minigame": "cipher",
       "onWin": {
         "han": 1
@@ -402,6 +410,14 @@
         "who": "Армин",
         "text": "Это не имя. Это значок «младший». В таких реестрах он стоит после последнего в роду, пока не вписан в основной список.",
         "expr": "thinking"
+      }
+    },
+    {
+      "show": {
+        "char": "armin",
+        "expr": "proud",
+        "slot": "right",
+        "enter": "fade"
       }
     },
     {

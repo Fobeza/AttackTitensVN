@@ -577,5 +577,6 @@
     "dispatch": "game/minigames/dispatch.js",
     "cipher": "game/minigames/cipher.js",
     "evidence": "game/minigames/evidence.js"
-  }
+  },
+  "menuCoverCg": "ch2_cover"
 }

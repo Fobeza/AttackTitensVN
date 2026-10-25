@@ -4,6 +4,15 @@
   "bg": "hq_corridor_night",
   "steps": [
     {
+      "cg": "ch2_cover"
+    },
+    {
+      "card": {
+        "title": "Крылья и клятва",
+        "sub": "Глава 2"
+      }
+    },
+    {
       "bg": "hq_corridor_night"
     },
     {
@@ -187,7 +196,7 @@
     {
       "show": {
         "char": "grey_cloak",
-        "expr": "hooded",
+        "expr": "hooded_gloves",
         "slot": "right",
         "enter": "fade"
       }
@@ -239,7 +248,7 @@
     {
       "show": {
         "char": "sam",
-        "expr": "scared",
+        "expr": "cornered",
         "slot": "center",
         "enter": "fade"
       }
