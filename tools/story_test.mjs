@@ -74,17 +74,18 @@ for (let seed = 1; seed <= 400; seed++) {
     endCard() { ended = true; }
   };
   VN.minigames = { abort() {}, play() { return { win: !!random(2), score: 1 }; } };
-  VN.parser.loadScene = async id => { assert(scenes[id], id); return scenes[id]; };
+  // Chapter 2 is covered by story_test_ch2.mjs: here we only check that Chapter 1 hands over to it
+  VN.parser.loadScene = async id => /^ch2_/.test(id) ? { steps: [{ end: true }] } : (assert(scenes[id], id), scenes[id]);
   await VN.parser.run(cfg.startScene);
   assert(ended, `no ending, seed ${seed}`);
   const v = VN.game.vars;
   for (const day of [1, 2, 3]) assert.equal(v[`ev${day}`], 2, `day ${day}, seed ${seed}`);
-  if (VN.game.scene === "ac_hook") {
+  if (VN.game.scene === "ch2_c1") {
     assert(v.proof >= 4);
     assert.notEqual(v.f_sam_spared, v.f_sam_arrested);
     endings.add(`${v.route}:${v.f_sam_spared ? "spared" : "arrested"}`);
   } else {
-    assert.equal(VN.game.scene, "end_lock");
+    assert.equal(VN.game.scene, "ch2_c0");
     endings.add(`lock:${v.f_escape}`);
   }
 }

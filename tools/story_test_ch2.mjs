@@ -50,10 +50,10 @@ for (let seed = 1; seed <= N; seed++) {
   const s = sam[random(sam.length)];
   v.f_sam_spared = s === "spared";
   v.f_sam_arrested = s === "arrested";
-  if (v.route === "") v.f_sam_spared = v.f_sam_arrested = false; // lock path: Sam unresolved
+  if (v.route === "") v.f_sam_spared = v.f_sam_arrested = false; // lock path: Sam unresolved, the bridge decides
   for (const f of FLAGS) v[f] = !!random(2);
   v.lei = random(9); v.erw = random(9); v.han = random(9); v.trust = random(7); v.truth = random(5);
-  await VN.parser.run("ch2_c1");
+  await VN.parser.run(v.route === "" ? "ch2_c0" : "ch2_c1");
   assert(ended, `no end card, seed ${seed}`);
   assert.equal(VN.game.scene, "ch2_c8", `ended in ${VN.game.scene}, seed ${seed}`);
   assert.equal(v.w1, 2, `week 1 meetings, seed ${seed}`);
