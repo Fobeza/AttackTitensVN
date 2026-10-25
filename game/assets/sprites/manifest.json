@@ -664,5 +664,68 @@
       "file": "masha_short_thinking.webp",
       "height": 0.532
     }
+  },
+  "npc_baker": {
+    "name": "Горожанка",
+    "neutral": {
+      "file": "npc_baker.webp",
+      "height": 0.57
+    }
+  },
+  "npc_old_woman": {
+    "name": "Горожанка",
+    "neutral": {
+      "file": "npc_old_woman.webp",
+      "height": 0.5
+    }
+  },
+  "npc_kid": {
+    "name": "Горожанин",
+    "neutral": {
+      "file": "npc_kid.webp",
+      "height": 0.42
+    }
+  },
+  "npc_confectioner": {
+    "name": "Горожанин",
+    "neutral": {
+      "file": "npc_confectioner.webp",
+      "height": 0.575
+    }
+  },
+  "npc_thread_seller": {
+    "name": "Горожанка",
+    "neutral": {
+      "file": "npc_thread_seller.webp",
+      "height": 0.51
+    }
+  },
+  "npc_paper_seller": {
+    "name": "Горожанин",
+    "neutral": {
+      "file": "npc_paper_seller.webp",
+      "height": 0.555
+    }
+  },
+  "npc_recruit_holz": {
+    "name": "Горожанин",
+    "neutral": {
+      "file": "npc_recruit_holz.webp",
+      "height": 0.6
+    }
+  },
+  "npc_beggar": {
+    "name": "Горожанин",
+    "neutral": {
+      "file": "npc_beggar.webp",
+      "height": 0.44
+    }
+  },
+  "npc_offended_customer": {
+    "name": "Горожанка",
+    "neutral": {
+      "file": "npc_offended_customer.webp",
+      "height": 0.565
+    }
   }
 }
