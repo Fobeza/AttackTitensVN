@@ -16,8 +16,9 @@ jobs:
         run: node tools/story_test_ch2.mjs
       - name: CG и достижимость шагов
         run: node tools/cg_test.mjs
+      - name: Зависимости
+        run: npm ci --no-audit --no-fund
+      - name: Chromium для смоук-теста
+        run: npx playwright install --with-deps chromium
       - name: Смоук-тест движка
-        run: |
-          npm ci --no-audit --no-fund
-          npx playwright install --with-deps chromium
-          node tools/smoke_test.mjs
+        run: node tools/smoke_test.mjs
