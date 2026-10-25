@@ -531,7 +531,44 @@
       "steps_away"
     ]
   },
-  "gallery": [],
+  "gallery": [
+    {
+      "id": "ch2_tag",
+      "title": "Жетон на ладони"
+    },
+    {
+      "id": "ch2_haircut",
+      "title": "Стрижка"
+    },
+    {
+      "id": "ch2_oath",
+      "title": "Присяга"
+    },
+    {
+      "id": "ch2_grey_cloak",
+      "title": "Серый плащ под фонарём"
+    },
+    {
+      "id": "ch2_storm_roof",
+      "title": "Крыша в бурю"
+    },
+    {
+      "id": "ch2_lullaby",
+      "title": "Колыбельная"
+    },
+    {
+      "id": "ch2_names_list",
+      "title": "Лист с именами"
+    },
+    {
+      "id": "ch2_wall_end",
+      "title": "Финал на стене"
+    },
+    {
+      "id": "ch2_cover",
+      "title": "Глава 2 · обложка"
+    }
+  ],
   "galleryText": "CG откроются по мере прохождения.",
   "minigames": {
     "cleaning": "game/minigames/cleaning.js",

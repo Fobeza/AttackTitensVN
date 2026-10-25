@@ -4,58 +4,237 @@
   "bg": "hq_corridor",
   "bgm": "tension_pad",
   "steps": [
-    { "card": { "title": "Демо движка", "sub": "все типы шагов на одной сцене" } },
-    { "narr": "Это техническая сцена. Тапни, чтобы продолжить. Тап во время печати — допечатать строку." },
-    { "show": { "char": "hange", "expr": "excited", "slot": "center", "enter": "rise" } },
-    { "say": { "who": "Ханджи", "text": "О! Проверим движок? Я обожаю эксперименты!" } },
-    { "say": { "who": "hange", "expr": "curious", "text": "who можно писать ключом из manifest, а expr прямо в реплике меняет эмоцию." } },
-    { "show": { "char": "levi", "expr": "annoyed", "slot": "right", "enter": "right" } },
-    { "say": { "who": "Леви", "text": "Говорящий подсвечен, остальные притушены. Удобно. Чего не скажешь об этом коридоре." } },
-    { "show": { "char": "hange", "slot": "left" } },
-    { "say": { "who": "Ханджи", "expr": "smile", "text": "Видишь? Я переехала в левый слот сама, без дубля. Слева спрайт зеркалится, чтобы смотреть в сцену." } },
-    { "sfx": "door_metal" },
-    { "shake": "small" },
-    { "say": { "who": "Леви", "expr": "serious", "text": "Тряска, звук… Дальше — выбор." } },
-    { "label": "pick" },
-    { "choice": [
-      { "text": "Мини-игра «Поймай момент»", "goto": "mg_timing" },
-      { "text": "Мини-игра «Вопрос»", "goto": "mg_quiz" },
-      { "text": "Проверить доверие (+2)", "set": { "trust": 2 }, "memo": "Леви запомнил вашу любознательность", "narr": "Доверие выросло. Памятка 🕊 лежит в Паузе → «Память».", "goto": "check" },
-      { "text": "Секретная опция (нужно доверие ≥ 2)", "if": { "var": "trust", "min": 2 }, "goto": "secret" },
-      { "text": "Закончить демо", "goto": "finish" }
-    ] },
-
-    { "label": "mg_timing" },
-    { "minigame": "timing", "params": { "rounds": 3, "need": 2 }, "var": "demo_score", "win": "mg_win", "lose": "mg_lose" },
-
-    { "label": "mg_quiz" },
-    { "minigame": "quiz", "params": { "questions": [
-      { "q": "Какая стена внешняя?", "options": ["Сина", "Роза", "Мария"], "answer": 2, "hint": "Мария — самая внешняя." }
-    ] }, "var": "demo_score", "onWin": { "truth": 1 }, "win": "mg_win", "lose": "mg_lose" },
-
-    { "label": "mg_win" },
-    { "say": { "who": "Ханджи", "expr": "laugh", "text": "Победа! Очков: {{demo_score}}." } },
-    { "goto": "pick" },
-    { "label": "mg_lose" },
-    { "say": { "who": "Леви", "expr": "tired", "text": "Проигрыш. Очков: {{demo_score}}. Бывает." } },
-    { "goto": "pick" },
-
-    { "label": "check" },
-    { "if": { "var": "trust", "min": 4, "goto": "check_high", "else": "pick" } },
-    { "label": "check_high" },
-    { "say": { "who": "Леви", "expr": "smirk", "text": "Доверие уже {{trust}}. Хватит." } },
-    { "goto": "pick" },
-
-    { "label": "secret" },
-    { "flash": "#fff" },
-    { "say": { "who": "Ханджи", "expr": "maniac", "text": "Секрет открыт! Условия умеют min/max/eq/ne и all/any." } },
-    { "goto": "pick" },
-
-    { "label": "finish" },
-    { "hide": "all" },
-    { "wait": 600 },
-    { "bg": "wall_view" },
-    { "narr": "Конец технической сцены. Она проверяет возможности движка и используется автоматическими тестами. Основная история начинается с пролога." },
-    { "end": { "title": "Демо завершено", "sub": "Сюжет пишется в game/scenes/*.json — см. docs/SCENE_FORMAT.md" } }
+    {
+      "card": {
+        "title": "Демо движка",
+        "sub": "все типы шагов на одной сцене"
+      }
+    },
+    {
+      "narr": "Это техническая сцена. Тапни, чтобы продолжить. Тап во время печати — допечатать строку."
+    },
+    {
+      "show": {
+        "char": "hange",
+        "expr": "excited",
+        "slot": "center",
+        "enter": "rise"
+      }
+    },
+    {
+      "say": {
+        "who": "Ханджи",
+        "text": "О! Проверим движок? Я обожаю эксперименты!"
+      }
+    },
+    {
+      "say": {
+        "who": "hange",
+        "expr": "curious",
+        "text": "who можно писать ключом из manifest, а expr прямо в реплике меняет эмоцию."
+      }
+    },
+    {
+      "show": {
+        "char": "levi",
+        "expr": "annoyed",
+        "slot": "right",
+        "enter": "right"
+      }
+    },
+    {
+      "say": {
+        "who": "Леви",
+        "text": "Говорящий подсвечен, остальные притушены. Удобно. Чего не скажешь об этом коридоре."
+      }
+    },
+    {
+      "show": {
+        "char": "hange",
+        "slot": "left"
+      }
+    },
+    {
+      "say": {
+        "who": "Ханджи",
+        "expr": "smile",
+        "text": "Видишь? Я переехала в левый слот сама, без дубля. Слева спрайт зеркалится, чтобы смотреть в сцену."
+      }
+    },
+    {
+      "sfx": "door_metal"
+    },
+    {
+      "shake": "small"
+    },
+    {
+      "say": {
+        "who": "Леви",
+        "expr": "serious",
+        "text": "Тряска, звук… Дальше — выбор."
+      }
+    },
+    {
+      "label": "pick"
+    },
+    {
+      "choice": [
+        {
+          "text": "Мини-игра «Поймай момент»",
+          "goto": "mg_timing"
+        },
+        {
+          "text": "Мини-игра «Вопрос»",
+          "goto": "mg_quiz"
+        },
+        {
+          "text": "Проверить доверие (+2)",
+          "set": {
+            "trust": 2
+          },
+          "memo": "Леви запомнил вашу любознательность",
+          "narr": "Доверие выросло. Памятка 🕊 лежит в Паузе → «Память».",
+          "goto": "check"
+        },
+        {
+          "text": "Секретная опция (нужно доверие ≥ 2)",
+          "if": {
+            "var": "trust",
+            "min": 2
+          },
+          "goto": "secret"
+        },
+        {
+          "text": "Закончить демо",
+          "goto": "finish"
+        }
+      ]
+    },
+    {
+      "label": "mg_timing"
+    },
+    {
+      "minigame": "timing",
+      "params": {
+        "rounds": 3,
+        "need": 2
+      },
+      "var": "demo_score",
+      "win": "mg_win",
+      "lose": "mg_lose"
+    },
+    {
+      "label": "mg_quiz"
+    },
+    {
+      "minigame": "quiz",
+      "params": {
+        "questions": [
+          {
+            "q": "Какая стена внешняя?",
+            "options": [
+              "Сина",
+              "Роза",
+              "Мария"
+            ],
+            "answer": 2,
+            "hint": "Мария — самая внешняя."
+          }
+        ]
+      },
+      "var": "demo_score",
+      "onWin": {
+        "truth": 1
+      },
+      "win": "mg_win",
+      "lose": "mg_lose"
+    },
+    {
+      "label": "mg_win"
+    },
+    {
+      "say": {
+        "who": "Ханджи",
+        "expr": "laugh",
+        "text": "Победа! Очков: {{demo_score}}."
+      }
+    },
+    {
+      "goto": "pick"
+    },
+    {
+      "label": "mg_lose"
+    },
+    {
+      "say": {
+        "who": "Леви",
+        "expr": "tired",
+        "text": "Проигрыш. Очков: {{demo_score}}. Бывает."
+      }
+    },
+    {
+      "goto": "pick"
+    },
+    {
+      "label": "check"
+    },
+    {
+      "if": {
+        "var": "trust",
+        "min": 4,
+        "goto": "check_high",
+        "else": "pick"
+      }
+    },
+    {
+      "label": "check_high"
+    },
+    {
+      "say": {
+        "who": "Леви",
+        "expr": "smirk",
+        "text": "Доверие уже {{trust}}. Хватит."
+      }
+    },
+    {
+      "goto": "pick"
+    },
+    {
+      "label": "secret"
+    },
+    {
+      "flash": "#fff"
+    },
+    {
+      "say": {
+        "who": "Ханджи",
+        "expr": "maniac",
+        "text": "Секрет открыт! Условия умеют min/max/eq/ne и all/any."
+      }
+    },
+    {
+      "goto": "pick"
+    },
+    {
+      "label": "finish"
+    },
+    {
+      "hide": "all"
+    },
+    {
+      "wait": 600
+    },
+    {
+      "bg": "wall_view"
+    },
+    {
+      "narr": "Конец технической сцены. Она проверяет возможности движка и используется автоматическими тестами. Основная история начинается с пролога."
+    },
+    {
+      "end": {
+        "title": "Демо завершено",
+        "sub": "Сюжет пишется в game/scenes/*.json — см. docs/SCENE_FORMAT.md"
+      }
+    }
   ]
 }
