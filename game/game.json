@@ -225,6 +225,9 @@
     },
     "f_ch2_lullaby": {
       "default": false
+    },
+    "f_ch2_body": {
+      "default": false
     }
   },
   "speakers": [
@@ -284,6 +287,10 @@
     {
       "id": "ch2_c2",
       "title": "Гл. 2 · Первая неделя"
+    },
+    {
+      "id": "ch2_c3",
+      "title": "Гл. 2 · Тренировка"
     },
     {
       "id": "demo",
