@@ -18,12 +18,11 @@ jobs:
       - name: CG и достижимость шагов
         run: node tools/cg_test.mjs
 
-  # Движок в настоящем браузере. Отдельная job: если CDN Playwright недоступен,
-  # это видно по ней, но не блокирует остальные проверки и сборку релиза.
+  # Движок в настоящем браузере: отдельная job, чтобы падение смоука было
+  # видно отдельно от проверок контента.
   smoke:
     # ubuntu-latest с 19.10.2026 — это Ubuntu 26, на нём playwright 1.56 не ставит Chromium.
     runs-on: ubuntu-24.04
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
