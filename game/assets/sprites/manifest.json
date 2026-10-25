@@ -544,5 +544,49 @@
       "file": "masha_uniform_defiant.webp",
       "height": 0.532
     }
+  },
+  "masha_short": {
+    "name": "Маша",
+    "color": "#cfe3c9",
+    "neutral": {
+      "file": "masha_short_neutral.webp",
+      "height": 0.532
+    },
+    "smirk": {
+      "file": "masha_short_smirk.webp",
+      "height": 0.532
+    },
+    "smile": {
+      "file": "masha_short_smile.webp",
+      "height": 0.532
+    },
+    "determined": {
+      "file": "masha_short_determined.webp",
+      "height": 0.532
+    },
+    "tired": {
+      "file": "masha_short_tired.webp",
+      "height": 0.532
+    },
+    "soft": {
+      "file": "masha_short_soft.webp",
+      "height": 0.532
+    },
+    "sad": {
+      "file": "masha_short_sad.webp",
+      "height": 0.532
+    },
+    "surprised": {
+      "file": "masha_short_surprised.webp",
+      "height": 0.532
+    },
+    "scared": {
+      "file": "masha_short_scared.webp",
+      "height": 0.532
+    },
+    "thinking": {
+      "file": "masha_short_thinking.webp",
+      "height": 0.532
+    }
   }
 }
