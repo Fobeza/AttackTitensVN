@@ -22,7 +22,7 @@
       "narr": "Потом громыхнуло так, что потолок вздрогнул. И следом закричали: «Крыша! Крыша казармы!»"
     },
     {
-      "bg": "hq_courtyard"
+      "bg": "hq_courtyard_storm"
     },
     {
       "show": {
@@ -123,6 +123,9 @@
       "goto": "c_i6_game"
     },
     {
+      "bg": "hq_roof_storm"
+    },
+    {
       "label": "c_i6_ladder"
     },
     {
@@ -194,7 +197,7 @@
       "label": "c_i6_after"
     },
     {
-      "bg": "hq_mess"
+      "bg": "hq_mess_hearth"
     },
     {
       "if": {
@@ -286,7 +289,7 @@
       "hide": "all"
     },
     {
-      "bg": "hq_mess"
+      "bg": "hq_mess_hearth"
     },
     {
       "show": {
