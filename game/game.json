@@ -313,12 +313,63 @@
     },
     "f_ch2_young_lead": {
       "default": false
+    },
+    "f_i1_talk": {
+      "default": false
+    },
+    "f_i1_ride": {
+      "default": false
+    },
+    "f_i2_neat": {
+      "default": false
+    },
+    "f_i2_quiz": {
+      "default": false
+    },
+    "f_i3_s_thr": {
+      "default": false
+    },
+    "f_i3_s_tea": {
+      "default": false
+    },
+    "f_i3_s_swt": {
+      "default": false
+    },
+    "f_i3_s_bk": {
+      "default": false
+    },
+    "f_i3_sew": {
+      "default": false
+    },
+    "f_i3_kid": {
+      "default": false
+    },
+    "f_gift_levi": {
+      "default": false
+    },
+    "f_gift_jean": {
+      "default": false
+    },
+    "f_gift_han": {
+      "default": false
+    },
+    "f_i4_dream": {
+      "default": false
+    },
+    "f_i4_sang": {
+      "default": false
+    },
+    "shop": {
+      "default": 0,
+      "title": "Покупки в городе"
     }
   },
   "speakers": [
     "???",
     "Голос",
-    "Командующий"
+    "Командующий",
+    "Торговка",
+    "Мальчишка"
   ],
   "scenes": [
     {
@@ -378,8 +429,16 @@
       "title": "Гл. 2 · Первая неделя"
     },
     {
+      "id": "ch2_i1",
+      "title": "Гл. 2 · Конюшня"
+    },
+    {
       "id": "ch2_c3",
       "title": "Гл. 2 · Тренировка"
+    },
+    {
+      "id": "ch2_i2",
+      "title": "Гл. 2 · Кухонный наряд"
     },
     {
       "id": "ch2_c4",
@@ -394,8 +453,16 @@
       "title": "Гл. 2 · Личные сцены"
     },
     {
+      "id": "ch2_i3",
+      "title": "Гл. 2 · Город"
+    },
+    {
       "id": "ch2_c6",
       "title": "Гл. 2 · Присяга и стрижка"
+    },
+    {
+      "id": "ch2_i4",
+      "title": "Гл. 2 · Вечер у печки"
     },
     {
       "id": "ch2_c7",
