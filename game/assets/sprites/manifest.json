@@ -456,5 +456,53 @@
       "file": "npc_guard.webp",
       "height": 0.607
     }
+  },
+  "grey_cloak": {
+    "name": "Серый плащ",
+    "color": "#9aa3af",
+    "neutral": {
+      "file": "grey_cloak_hooded.webp",
+      "height": 0.58
+    },
+    "hooded": {
+      "file": "grey_cloak_hooded.webp",
+      "height": 0.58
+    },
+    "hooded_lantern": {
+      "file": "grey_cloak_hooded_lantern.webp",
+      "height": 0.58
+    },
+    "hooded_gloves": {
+      "file": "grey_cloak_hooded_gloves.webp",
+      "height": 0.58
+    },
+    "reveal": {
+      "file": "grey_cloak_reveal.webp",
+      "height": 0.58
+    },
+    "cold": {
+      "file": "grey_cloak_cold.webp",
+      "height": 0.58
+    },
+    "smirk": {
+      "file": "grey_cloak_smirk.webp",
+      "height": 0.58
+    },
+    "talk": {
+      "file": "grey_cloak_talk.webp",
+      "height": 0.58
+    },
+    "bow": {
+      "file": "grey_cloak_bow.webp",
+      "height": 0.58
+    },
+    "cornered": {
+      "file": "grey_cloak_cornered.webp",
+      "height": 0.58
+    },
+    "notebook": {
+      "file": "grey_cloak_notebook.webp",
+      "height": 0.58
+    }
   }
 }
