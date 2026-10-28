@@ -259,6 +259,11 @@ AVOID: black or navy flat fill, silhouette lighting, backlight, rim-only light, 
 text, watermark, ground shadow.
 ```
 
+**Временно убраны из сцен** до замены спрайтов: `{"show": {"char": "npc_soldier", ...}}` в `ch2_c6` (плац, перед выходом Эрвина) и
+`{"show": {"char": "npc_guard", ...}}` с парным `hide` в `exposure` (ветка «под стражу», реплика «Дозорный: Приказ командира?» осталась без спрайта).
+После перегенерации вернуть: `ch2_c6` — `show npc_soldier, slot center, enter fade` перед `show mikasa`; `exposure` — `show npc_guard, slot left`
+перед репликой Дозорного и `hide slot left, exit fade` перед `show levi`.
+
 ## P1 · Персонажи, похожие на Эрена: `npc_tea_seller`, `npc_kid`, `npc_beggar`
 
 Лица и причёски у этих трёх близки к Эрену (тёмные волосы, тот же овал и разрез глаз). В `ch2_i3` они стоят в одном кадре

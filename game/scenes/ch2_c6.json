@@ -563,14 +563,6 @@
     },
     {
       "show": {
-        "char": "npc_soldier",
-        "expr": "neutral",
-        "slot": "center",
-        "enter": "fade"
-      }
-    },
-    {
-      "show": {
         "char": "mikasa",
         "expr": "determined",
         "slot": "left",

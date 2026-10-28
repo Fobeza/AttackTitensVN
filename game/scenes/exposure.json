@@ -801,13 +801,6 @@
       "sfx": "steps"
     },
     {
-      "show": {
-        "char": "npc_guard",
-        "expr": "neutral",
-        "slot": "left"
-      }
-    },
-    {
       "say": {
         "who": "Дозорный",
         "text": "Приказ командира?"
@@ -835,12 +828,6 @@
     {
       "hide": {
         "slot": "center",
-        "exit": "fade"
-      }
-    },
-    {
-      "hide": {
-        "slot": "left",
         "exit": "fade"
       }
     },
