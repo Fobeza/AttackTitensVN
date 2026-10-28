@@ -227,3 +227,141 @@ closer to fit the gesture — keep the same distance as the base.
    (плац на рассвете), `?scene=ch2_c0` (двор ночью), `?scene=ch2_i6` (двор в бурю),
    `?scene=ch2_c4` и `?scene=ch2_i7` (крыша).
 4. `node tools/smoke_test.mjs` — после правки любых файлов в `game/assets/sprites/manifest.json`.
+
+---
+
+# Дополнение (проверка арта 28.10.2026)
+
+Находки при проверке всех 173 спрайтов, 38 фонов и 9 CG. Общая шапка камеры и блок `FRAMING` — те же, что выше.
+Для всех кадров ниже: зелёный фон `#00FF00` без градиента, 900x1600, полный рост, ноги у нижнего края,
+**ширина фигуры не больше 75% кадра** (раньше `npc_beggar`, `npc_old_woman`, `npc_cook_stern` упирались в боковые края).
+
+## P0 · Два спрайта-силуэта: `npc_guard`, `npc_soldier_m`
+
+Сейчас лицо и одежда чёрные, без деталей (средняя яркость 38 из 255, у нормальных спрайтов 60–130).
+Стиль и пропорции — `npc_baker.webp` и `npc_confectioner.webp`. Импорт: `--tol 110`.
+
+```text
+STYLE: Attack on Titan anime style, mid-2010s TV-anime cel shading, thick slightly uneven ink outline,
+two-tone cel shadow, muted dusty palette, weathered fabric, no gloss. LIGHT: soft cold daylight key from
+the upper left, FRONT-LIT. The face, hands and uniform must be fully readable: midtones, not silhouette,
+no black fill, shadows no darker than 30% of local colour.
+CAMERA: frontal three-quarter view turned to the viewer's left, full body, standing, feet at the bottom edge.
+
+1. npc_guard — a gate guard of the garrison: man about 40, stern square face, short brown beard, dark-navy
+   guard uniform with brass buttons, peaked cap, rifle slung on the right shoulder held by one hand, black
+   leather boots. Expression: neutral, watchful.
+2. npc_soldier_m — a young Survey Corps patrol soldier: short dark hair, tired but alert face, light-brown
+   jacket with the Wings emblem, white trousers with 3DMG straps, high brown boots, short dark-green cloak
+   over one shoulder. Hands relaxed at the sides. Expression: neutral.
+
+AVOID: black or navy flat fill, silhouette lighting, backlight, rim-only light, extra hands or fingers,
+text, watermark, ground shadow.
+```
+
+## P1 · Персонажи, похожие на Эрена: `npc_tea_seller`, `npc_kid`, `npc_beggar`
+
+Лица и причёски у этих трёх близки к Эрену (тёмные волосы, тот же овал и разрез глаз). В `ch2_i3` они стоят в одном кадре
+с Эреном-подобными героями. Нужно развести их. Сохранить: костюм, позу и реквизит из текущих спрайтов, поменять лицо и причёску.
+
+```text
+Keep the pose, costume and prop of the attached sprite; change ONLY the face and hair so the person looks
+clearly different from Eren Yeager (no dark-brown hair with a pony-tail or bangs parted like Eren, no
+green-teal eyes).
+
+1. npc_tea_seller — young man about 25, sly squint. Short curly RED-BROWN hair, freckles, hazel eyes, a small
+   mouth with a crooked smile, round face. Brown knitted vest, grey scarf, holds a small tea tin in one hand.
+2. npc_kid — boy about 10, thin. Messy LIGHT-BROWN hair falling over the forehead, grey eyes (the text calls
+   them "grey as a puddle"), freckles, round soft face, loose off-white shirt two sizes too big, bare feet.
+3. npc_beggar — gaunt man about 50, hollow cheeks, grey stubble and thin grey hair, deep-set pale eyes,
+   crouching with a wooden bowl, patched grey blanket over the shoulders. Keep the crouching pose.
+```
+
+Файлы: `npc_tea_seller.webp`, `npc_kid.webp`, `npc_beggar.webp` (имена в манифесте не меняются).
+`npc_beggar` кроме того шире кадра: после правки уложить в 75% ширины (`--scale-from` не нужен: это одиночный спрайт).
+
+## P2 · Повар: единый цвет по 10 кадрам
+
+У `npc_cook_stern` оранжевое свечение на фартуке и лице, у `npc_cook_neutral` серые руки и тёмный фартук, у остальных цвет плавает.
+Перегенерировать **ЗАПРОС 4** из `CH2_PROMPTS.md` одним запросом с блоком:
+
+```text
+COLOUR LOCK: identical colour of skin, apron (dull brown with dark stains), shirt (grey-blue) and trousers in
+ALL 10 images. Same soft cold daylight from the upper left in all 10. NO coloured rim light, NO orange glow,
+NO warm hearth light, NO colour grading between frames. Skin tone must be the same in the face and in the hands.
+```
+
+Плюс `FRAMING` (макушка), как выше. Импорт: `--scale-from npc_cook_neutral`.
+
+## P2 · Петра с подносом: `petra_tray`
+
+Единственный кадр Петры в зелёном плаще Разведкорпуса; в остальных 11 она без плаща. Блок:
+
+```text
+Costume identical to the reference petra_neutral.webp: brown jacket, no cloak, white trousers with 3DMG
+straps. Do NOT add a cloak or any extra clothing layer.
+```
+
+Остальное — позы с предметами (запрос 7, кадр 6).
+
+## CG: цвет волос и сюжет
+
+### `ch2_lullaby` — Маша с рыжими волосами
+
+Волосы Маши везде пепельно-русые (`masha_*`), на CG рыжие. Нужна правка от существующего CG (img2img, сила 0.4):
+
+```text
+Same composition, pose, lighting and painting style as the attached image. Change ONLY the hair colour of
+the woman: light ash-blond, long, with the same wave; keep green eyes. Everything else unchanged.
+```
+
+### `ch2_haircut` — волосы почти серебристые
+
+Привести к пепельно-русому, как у спрайтов:
+
+```text
+Same image. Change ONLY the hair colour of the seated girl: warm light ASH-BLOND (not silver, not white),
+long, same length. Everything else unchanged.
+```
+
+### `ch2_haircut` для Эрвина и Ханджи (необязательно)
+
+Пока сцена показывает CG только при наставнике Леви (`mentor = levi`). Для двух других можно нарисовать парные CG:
+
+```text
+Same composition as the attached ch2_haircut, same girl and room, same candle and basin. Replace ONLY the
+person with the scissors:
+A) ch2_haircut_erwin — Erwin Smith, tall, short light-blond hair, brown Survey Corps jacket, the RIGHT
+   sleeve pinned empty, the scissors in his LEFT hand, concentrated expression.
+B) ch2_haircut_hange — Hange Zoe, brown hair in a high ponytail, round glasses, green cloak, a comb in one
+   hand and scissors in the other, cheerful sloppy expression.
+```
+
+Подключение: файлы `game/assets/cg/ch2_haircut_erwin.webp`, `ch2_haircut_hange.webp` + две строки в `game.json → gallery`
+(`{"id": "ch2_haircut_erwin", "title": "Стрижка"}` и т. д.), затем в `ch2_c6.json` на метках `c6_h_a` и `c6_h_b` заменить условие
+`mentor ne levi` на выбор CG по наставнику. Проверка: `node tools/lint_scenes.mjs`, `node tools/cg_test.mjs`.
+
+### `ch2_storm_roof` — блондинка с короткой стрижкой на крыше
+
+На CG наверху лежит короткостриженая блондинка, но в день бури (`ch2_i6`, 10-й день) у Маши ещё длинные волосы
+(стрижка на 16-й день, `ch2_c6`), а Армина в сцене нет. Правка от существующего CG:
+
+```text
+Same composition, rain, roof, ladder, hands passing slate tiles, Mikasa with the red scarf, the man on the
+ladder. Change ONLY the girl lying at the top beside the hole: she is Masha, her LONG wet ash-blond hair
+is tied back with a strip of cloth and hangs over her shoulder, brown Survey Corps jacket, determined face.
+No short hair.
+```
+
+### Остальные CG
+
+`ch2_cover`, `ch2_grey_cloak`, `ch2_oath`, `ch2_names_list`, `ch2_tag`, `ch2_wall_end` — без замечаний (формат 1080×1920, композиция читается,
+Маша после стрижки с короткими волосами там, где должна).
+
+## Чек-лист после замены
+
+1. Скрипт проверки верхней строки кадра (в начале файла) не должен выводить позы с предметами и `npc_*`.
+2. Яркость: у `npc_guard` и `npc_soldier_m` средняя яркость фигуры не меньше 60 из 255.
+3. `node tools/lint_scenes.mjs` и `node tools/cg_test.mjs` — без ошибок.
+4. Глазами: `?scene=ch2_c6&debug=1` (солдат в центре плаца), `?scene=ch2_i3&debug=1` (продавец чая, мальчик, нищий),
+   `?scene=exposure` ветка «под стражу» (дозорный).
