@@ -48,12 +48,22 @@ reference image; shrink nothing.
 Импорт пачки — **всегда** с эталоном, чтобы голова не меняла размер между кадрами:
 
 ```bash
+# 1) эталон в геометрии генерации (768x1376), а не в 675x1200
+python3 tools/prep_ref.py game/assets/sprites/<neutral>.webp raw_gen/_ref/g_<neutral>.png
+# 2) пачка
 for f in raw_gen/<char>/*.png; do
   n=$(basename "$f" .png)
-  python3 tools/make_sprite.py "$f" --scale-from raw_gen/<char>/<neutral-кадр>.png --tol 110 \
+  python3 tools/make_sprite.py "$f" --scale-from raw_gen/_ref/g_<neutral>.png --tol 110 \
     -o "game/assets/sprites/${n}.webp"
 done
 ```
+
+> **Ловушка (проверено 28.10.2026).** `--scale-from` берёт `ref_h` из файла эталона как
+> есть, а игровые спрайты лежат в кадре 675x1200 при сырье 768x1376. Если подать
+> `game/assets/sprites/<neutral>.webp` напрямую, фигура в сырье выходит в 1.15 раза выше
+> кадра, и `make_sprite.py` срезает верх — макушка, шляпа или поднятый предмет упираются
+> в край. Симптом ровно тот, что в таблице дефектов. Поэтому эталон сначала прогоняется
+> через `tools/prep_ref.py`.
 
 Затем проверить скриптом выше, а в игре — `?scene=<id>&debug=1` на реплике с этим спрайтом.
 
@@ -97,6 +107,13 @@ keep the head at the SAME size as in the reference image; shrink nothing.
 ---
 
 # P1 · Маша — 20 кадров
+
+> **Отменено 29.10.2026.** Машу нигде не показываем: повествование идёт от первого лица,
+> портрет героини в игре не появляется. Спрайты `masha_*` (21 файл) и три группы в
+> `manifest.json` удалены, пять `show`-шагов убраны из `ch2_c6`; Маша осталась только
+> говорящим (`game.json → speakers`) и участником CG. Раздел оставлен как история решения:
+> если героиню когда-нибудь понадобится показать, промпты ниже снова рабочие, но эталон
+> для `--scale-from` готовить через `tools/prep_ref.py` (см. ловушку в начале файла).
 
 Два запроса: ЗАПРОС 2 (`masha_uniform_*`, референс `masha_neutral.webp`) и ЗАПРОС 3
 (`masha_short_*`, референс `masha_uniform_neutral.webp` после перегенерации). Заменить в шапке
