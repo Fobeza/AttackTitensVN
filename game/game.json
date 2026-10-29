@@ -10,7 +10,7 @@
     "scenes": "game/scenes",
     "assets": "game/assets"
   },
-  "menuBg": "cell_light",
+  "menuBg": "menu_ch2",
   "menuBgm": null,
   "memoToast": true,
   "theme": {
