@@ -20,6 +20,11 @@
 - **CG:** `ch2_lullaby`, `ch2_haircut`, `ch2_storm_roof` приведены к пепельно-русым волосам
   и к длинным волосам в день бури; добавлены парные CG `ch2_haircut_erwin` и
   `ch2_haircut_hange` (галерея + выбор по `mentor` в `ch2_c6` на метках `c6_h_a` и `c6_h_b`).
+- **Иконки и PWA:** нарисована иконка (крылья над стеной), нарезана в `game/assets/ui/`
+  (favicon 64, apple-touch-icon 180, 192 и 512), добавлен `game/manifest.webmanifest`
+  (fullscreen, portrait, палитра `#0c0c0e`) и подключён в `index.html`; в `serve.mjs` добавлен
+  MIME `application/manifest+json`. Service worker не заводился — кэш десятков МБ ассетов
+  дороже пользы.
 - **Обложка меню:** нарисован `menu_ch2` (стена ночью, плащ Разведкорпуса на парапете, фонарь,
   пустая верхняя треть под заголовок) в стиле игровых фонов; `game.json → menuBg` переключён
   с `cell_light` на `menu_ch2`.
