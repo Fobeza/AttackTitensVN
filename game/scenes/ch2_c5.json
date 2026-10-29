@@ -415,21 +415,24 @@
           "text": "«Первый. Лучше ничего не прятать.»",
           "goto": "c5_e_a",
           "set": {
-            "trust": 1
+            "trust": 1,
+            "f_ch2_letter": "full"
           }
         },
         {
           "text": "«Второй. Пусть догадываются сами.»",
           "goto": "c5_e_b",
           "set": {
-            "erw": 1
+            "erw": 1,
+            "f_ch2_letter": "part"
           }
         },
         {
           "text": "«Третий. Они не заслужили ни слова.»",
           "goto": "c5_e_c",
           "set": {
-            "truth": 1
+            "truth": 1,
+            "f_ch2_letter": "none"
           }
         }
       ]

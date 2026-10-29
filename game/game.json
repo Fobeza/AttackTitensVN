@@ -383,6 +383,10 @@
     },
     "f_i8_tea": {
       "default": false
+    },
+    "f_ch2_letter": {
+      "default": "",
+      "title": "Ответ Столице (письмо Эрвина)"
     }
   },
   "speakers": [
