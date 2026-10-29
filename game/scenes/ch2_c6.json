@@ -271,14 +271,6 @@
       "label": "c6_hair_end"
     },
     {
-      "show": {
-        "char": "masha_uniform",
-        "expr": "neutral",
-        "slot": "left",
-        "enter": "fade"
-      }
-    },
-    {
       "narr": "Я села. Ножницы холодно коснулись затылка."
     },
     {
@@ -316,9 +308,47 @@
     {
       "if": {
         "var": "mentor",
-        "ne": "levi",
-        "goto": "c6_h_a_nocg"
+        "eq": "erwin",
+        "goto": "c6_ha_erwin"
       }
+    },
+    {
+      "if": {
+        "var": "mentor",
+        "eq": "hange",
+        "goto": "c6_ha_hange"
+      }
+    },
+    {
+      "if": {
+        "var": "mentor",
+        "eq": "levi",
+        "goto": "c6_ha_levi"
+      }
+    },
+    {
+      "goto": "c6_h_a_nocg"
+    },
+    {
+      "label": "c6_ha_erwin"
+    },
+    {
+      "cg": "ch2_haircut_erwin"
+    },
+    {
+      "goto": "c6_h_a_nocg"
+    },
+    {
+      "label": "c6_ha_hange"
+    },
+    {
+      "cg": "ch2_haircut_hange"
+    },
+    {
+      "goto": "c6_h_a_nocg"
+    },
+    {
+      "label": "c6_ha_levi"
     },
     {
       "cg": "ch2_haircut"
@@ -328,14 +358,6 @@
     },
     {
       "narr": "Первая прядь упала мне на колени. Потом вторая. Я смотрела, как они лежат, и думала, что вместе с ними срезается тот человек, которого никто из нас не знает."
-    },
-    {
-      "show": {
-        "char": "masha_uniform",
-        "expr": "sad",
-        "slot": "left",
-        "enter": "fade"
-      }
     },
     {
       "say": {
@@ -352,9 +374,47 @@
     {
       "if": {
         "var": "mentor",
-        "ne": "levi",
-        "goto": "c6_h_b_nocg"
+        "eq": "erwin",
+        "goto": "c6_hb_erwin"
       }
+    },
+    {
+      "if": {
+        "var": "mentor",
+        "eq": "hange",
+        "goto": "c6_hb_hange"
+      }
+    },
+    {
+      "if": {
+        "var": "mentor",
+        "eq": "levi",
+        "goto": "c6_hb_levi"
+      }
+    },
+    {
+      "goto": "c6_h_b_nocg"
+    },
+    {
+      "label": "c6_hb_erwin"
+    },
+    {
+      "cg": "ch2_haircut_erwin"
+    },
+    {
+      "goto": "c6_h_b_nocg"
+    },
+    {
+      "label": "c6_hb_hange"
+    },
+    {
+      "cg": "ch2_haircut_hange"
+    },
+    {
+      "goto": "c6_h_b_nocg"
+    },
+    {
+      "label": "c6_hb_levi"
     },
     {
       "cg": "ch2_haircut"
@@ -364,14 +424,6 @@
     },
     {
       "narr": "Ножницы щёлкали ровно, без суеты. Я сидела, не двигаясь, и слушала, как падают пряди. Звук был такой, будто кто-то тихо считал секунды."
-    },
-    {
-      "show": {
-        "char": "masha_uniform",
-        "expr": "thinking",
-        "slot": "left",
-        "enter": "fade"
-      }
     },
     {
       "goto": "c6_h_end"
@@ -515,22 +567,6 @@
         "who": "Ханджи",
         "text": "Готово! Выглядишь так, будто решила идти вперёд. Это хорошо.",
         "expr": "smile"
-      }
-    },
-    {
-      "show": {
-        "char": "masha_short",
-        "expr": "soft",
-        "slot": "left",
-        "enter": "fade"
-      }
-    },
-    {
-      "show": {
-        "char": "masha_short",
-        "expr": "neutral",
-        "slot": "left",
-        "enter": "fade"
       }
     },
     {

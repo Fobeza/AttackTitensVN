@@ -10,7 +10,7 @@
     "scenes": "game/scenes",
     "assets": "game/assets"
   },
-  "menuBg": "cell_light",
+  "menuBg": "menu_ch2",
   "menuBgm": null,
   "memoToast": true,
   "theme": {
@@ -391,7 +391,8 @@
     "Командующий",
     "Торговка",
     "Мальчишка",
-    "Рекрут"
+    "Рекрут",
+    "Маша"
   ],
   "scenes": [
     {
@@ -538,6 +539,14 @@
     },
     {
       "id": "ch2_haircut",
+      "title": "Стрижка"
+    },
+    {
+      "id": "ch2_haircut_erwin",
+      "title": "Стрижка"
+    },
+    {
+      "id": "ch2_haircut_hange",
       "title": "Стрижка"
     },
     {
